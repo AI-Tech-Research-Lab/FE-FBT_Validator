@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FE-FBT Fourier extension</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@400;500;600&family=STIX+Two+Text:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/decimal.js/10.4.3/decimal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.27.0/plotly.min.js"></script>
+<style>
+:root {
+  color-scheme: light;
+  --font-ui: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  --font-math: "STIX Two Text", "STIX Two Math", "Cambria Math", "Times New Roman", serif;
+  --font-code: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --bg: #eef1ef; --surface: #f8faf9; --ink: #1b2330; --muted: #5a6472; --rule: #cbd3d0; --grid: rgba(27,35,48,.07);
+  --c-f: #2f4ba8; --c-s: #0b8a77; --c-ext: #b26f12; --c-err: #8a3e8c; --c-err-ext: #c79a5a; --c-noise: #5f6878;
+  --na-bg: #fbf6ec; --na-ink: #6b4a12;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #131821; --surface: #1a2030; --ink: #e3e7ee; --muted: #98a2b3; --rule: #2c3445; --grid: rgba(227,231,238,.07);
+    --c-f: #8fa2ff; --c-s: #39c9b2; --c-ext: #e3a44b; --c-err: #d68bd2; --c-err-ext: #a88a62; --c-noise: #9aa3b5;
+    --na-bg: #2a2416; --na-ink: #ecc98a;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #131821; --surface: #1a2030; --ink: #e3e7ee; --muted: #98a2b3; --rule: #2c3445; --grid: rgba(227,231,238,.07);
+  --c-f: #8fa2ff; --c-s: #39c9b2; --c-ext: #e3a44b; --c-err: #d68bd2; --c-err-ext: #a88a62; --c-noise: #9aa3b5;
+  --na-bg: #2a2416; --na-ink: #ecc98a;
+}
+*, *::before, *::after { box-sizing: inherit; }
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--font-ui); -webkit-text-size-adjust: 100%; }
+
+.app { display: grid; grid-template-columns: 300px minmax(0, 1fr); min-height: 100vh; }
+.panel { background: var(--surface); border-right: 1px solid var(--rule); padding: 24px 22px 28px; display: flex; flex-direction: column; gap: 22px; }
+.panel h1 { font-size: 17px; font-weight: 600; margin: 0 0 6px; line-height: 1.3; }
+.panel .lede { margin: 0; color: var(--muted); font-size: 13.5px; }
+.group { display: flex; flex-direction: column; gap: 8px; border: 0; margin: 0; padding: 0; min-width: 0; }
+.group + .group { border-top: 1px solid var(--rule); padding-top: 18px; }
+.head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.group .lbl { font-weight: 500; font-size: 14px; padding: 0; }
+output { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 13.5px; }
+.hint { color: var(--muted); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+select { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: 7px 10px; width: 100%; }
+.exprbox { display: flex; align-items: center; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); padding-left: 10px; }
+.exprbox span { font-family: var(--font-math); font-style: italic; color: var(--muted); white-space: nowrap; }
+.exprbox input { flex: 1; min-width: 0; font: 14px/1.4 var(--font-code); color: var(--ink); background: none; border: 0; padding: 7px 10px 7px 8px; }
+.exprbox input:focus-visible { outline: none; }
+.exprbox:focus-within { outline: 2px solid var(--c-f); outline-offset: 2px; }
+.exprbox.bad { border-color: var(--c-ext); }
+.hint.bad { color: var(--na-ink); }
+.syntax { font-size: 12.5px; color: var(--muted); }
+.syntax summary { font-size: 12.5px; }
+.syntax p { margin: 6px 0 0; }
+.syntax code { font-family: var(--font-code); font-size: 12px; color: var(--ink); }
+input[type=range] { width: 100%; accent-color: var(--c-f); margin: 2px 0; }
+input[type=range]:disabled { opacity: .5; }
+.check { display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; }
+.check input { accent-color: var(--c-f); width: 16px; height: 16px; margin: 0; }
+.seg { position: relative; display: inline-flex; border: 1px solid var(--rule); border-radius: 7px; overflow: hidden; align-self: flex-start; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label { padding: 6px 12px; font-size: 13.5px; cursor: pointer; border-left: 1px solid var(--rule); user-select: none; }
+.seg label:first-of-type { border-left: 0; }
+.seg input:checked + label { background: var(--ink); color: var(--bg); }
+.seg input:disabled + label { opacity: .4; cursor: not-allowed; }
+.seg input:focus-visible + label, select:focus-visible, input[type=range]:focus-visible, .check input:focus-visible, button:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--c-f); outline-offset: 2px;
+}
+button.theme { font: inherit; font-size: 13px; background: none; border: 1px solid var(--rule); color: var(--muted); border-radius: 6px; padding: 6px 10px; cursor: pointer; align-self: flex-start; margin-top: auto; }
+
+main { padding: 26px 30px 36px; min-width: 0; display: flex; flex-direction: column; gap: 18px; }
+.formula { font-family: var(--font-math); font-size: clamp(21px, 2.4vw, 32px); line-height: 1.25; display: flex; flex-wrap: wrap; align-items: center; column-gap: .35em; row-gap: 6px; }
+.formula i { font-style: italic; }
+.formula .sum { display: inline-flex; flex-direction: column; align-items: center; line-height: 1; vertical-align: middle; margin: 0 .08em; }
+.formula .sum .big { font-size: 1.45em; line-height: .95; }
+.formula .sum small { font-size: .46em; font-variant-numeric: tabular-nums; }
+.formula sub, .formula sup { font-size: .6em; }
+.formula .rel { color: var(--muted); }
+.caption { margin: -8px 0 0; color: var(--muted); font-size: 14px; }
+.caption b { color: var(--ink); font-weight: 500; }
+
+.plotwrap { position: relative; height: clamp(440px, 66vh, 780px); background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 8px 6px 4px; }
+#plot { width: 100%; height: 100%; }
+.overlay { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 14px; padding: 24px; text-align: center; border-radius: 10px; }
+.overlay.loading { display: flex; background: color-mix(in srgb, var(--surface) 72%, transparent); }
+.overlay.na { display: flex; background: var(--surface); }
+.overlay p { margin: 0; max-width: 46ch; font-size: 14.5px; }
+.overlay.na p { background: var(--na-bg); color: var(--na-ink); padding: 14px 18px; border-radius: 8px; border-left: 3px solid var(--c-ext); text-align: left; }
+.spinner { width: 34px; height: 34px; border-radius: 50%; border: 3px solid var(--rule); border-top-color: var(--c-s); animation: spin .8s linear infinite; }
+.overlay.na .spinner { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: pulse 1.6s ease-in-out infinite; } @keyframes pulse { 50% { opacity: .35; } } }
+
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 2px solid var(--ink); }
+.stats div { padding: 10px 12px 12px 0; border-bottom: 1px solid var(--rule); min-width: 0; }
+.stats dt { font-size: 12.5px; color: var(--muted); }
+.stats dd { margin: 2px 0 0; font-family: var(--font-math); font-size: 20px; font-variant-numeric: tabular-nums lining-nums; overflow-wrap: anywhere; }
+.stats .key dd { color: var(--c-s); }
+.note { margin: -6px 0 0; color: var(--muted); font-size: 13px; max-width: 90ch; }
+details { font-size: 13.5px; }
+summary { cursor: pointer; color: var(--muted); }
+.tablewrap { overflow-x: auto; margin-top: 8px; }
+table { border-collapse: collapse; font-variant-numeric: tabular-nums; min-width: 420px; }
+th, td { text-align: right; padding: 4px 14px 4px 0; border-bottom: 1px solid var(--rule); }
+th { font-weight: 500; color: var(--muted); }
+tr.best td { color: var(--c-s); font-weight: 600; }
+
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+  .panel { border-right: 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px 24px; }
+  .panel > header, .panel > .theme { grid-column: 1 / -1; }
+  .panel > .theme { justify-self: start; }
+  .group + .group { border-top: 0; padding-top: 0; }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main { padding: 20px 14px 30px; }
+  .plotwrap { height: 520px; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="panel" aria-label="Controls">
+    <header>
+      <h1>FE-FBT Fourier extension</h1>
+      <p class="lede">How the degree-d series, built on the period-2 Hermite extension, approximates f on the domain [L, U].</p>
+    </header>
+
+    <div class="group">
+      <label class="lbl" for="f">Function</label>
+      <select id="f">
+        <option value="gelu" selected>GELU, x·Φ(x)</option>
+        <option value="sin">sin x</option>
+        <option value="cos">cos x</option>
+        <option value="exp">exp x</option>
+        <option value="rsqrt">1/√x</option>
+        <option value="recip">1/x</option>
+        <option value="sigmoid">sigmoid, 1/(1 + e⁻ˣ)</option>
+        <option value="tanh">tanh x</option>
+        <option value="custom">Custom…</option>
+      </select>
+      <div class="exprbox" id="exprBox"><span>f(x) =</span><input type="text" id="expr" value="x * Phi(x)" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="f(x)" aria-describedby="exprMsg"></div>
+      <div class="hint" id="exprMsg">Edit to use any expression in x; Enter applies it.</div>
+      <details class="syntax">
+        <summary>Syntax</summary>
+        <p>Operators <code>+ - * / ^</code> (or <code>**</code>), parentheses; <code>2x</code> means 2·x. Constants <code>pi</code>, <code>e</code>.</p>
+        <p>Functions <code>sin cos tan asin acos atan sinh cosh tanh asinh acosh atanh exp log ln log2 log10 sqrt abs erf erfc Phi sigmoid softplus relu gelu silu</code>, and <code>pow(a, b) min(a, b) max(a, b)</code>.</p>
+        <p>f must be smooth at L and U: the Hermite extension uses its derivatives there, computed exactly in high precision by automatic differentiation.</p>
+      </details>
+    </div>
+
+    <div class="group">
+      <div class="head"><label class="lbl" for="k">Domain width</label><output id="kOut" for="k"></output></div>
+      <div class="seg" role="radiogroup" aria-label="Domain type">
+        <input type="radio" name="dom" id="dSym" checked><label for="dSym">Symmetric</label>
+        <input type="radio" name="dom" id="dPos"><label for="dPos">Positive</label>
+      </div>
+      <input type="range" id="k" min="0" max="15" step="1" value="3">
+      <div class="hint" id="domHint"></div>
+    </div>
+
+    <div class="group">
+      <div class="head"><label class="lbl" for="d">Series degree</label><output id="dOut" for="d"></output></div>
+      <input type="range" id="d" min="4" max="15" step="1" value="10">
+    </div>
+
+    <div class="group">
+      <div class="head"><label class="lbl" for="ke">Hermite order</label><output id="keOut" for="ke"></output></div>
+      <label class="check"><input type="checkbox" id="keAuto" checked> Choose ke automatically</label>
+      <input type="range" id="ke" min="1" max="40" step="1" value="8" disabled aria-label="Manual ke">
+    </div>
+
+    <div class="group" role="group" aria-labelledby="lgX">
+      <span class="lbl" id="lgX">x axis</span>
+      <div class="seg">
+        <input type="radio" name="xax" id="xlin" checked><label for="xlin">Linear</label>
+        <input type="radio" name="xax" id="xlog"><label for="xlog">Logarithmic</label>
+      </div>
+      <div class="hint" id="xlogHint">Logarithmic requires a positive domain.</div>
+      <label class="check"><input type="checkbox" id="showExt"> Show the extension up to U + W</label>
+    </div>
+
+    <div class="group" role="group" aria-labelledby="lgE">
+      <span class="lbl" id="lgE">Error panel</span>
+      <div class="seg">
+        <input type="radio" name="err" id="eAbs" value="abs" checked><label for="eAbs">Absolute</label>
+        <input type="radio" name="err" id="eRel" value="rel"><label for="eRel">Relative</label>
+        <input type="radio" name="err" id="eBit" value="bit"><label for="eBit">Bits</label>
+      </div>
+    </div>
+
+    <button class="theme" id="themeBtn" type="button">Theme: system</button>
+  </aside>
+
+  <main>
+    <div class="formula" aria-label="Series formula">
+      <span><i>g</i>(<i>m</i>) = <i>f</i>(<i>L</i> + <i>W</i>(<i>m</i> + ½))</span>
+      <span class="rel">≈</span>
+      <span>2 Re<span class="sum"><small id="fD">1024</small><span class="big">∑</span><small><i>j</i> = 0</small></span><i>c<sub>j</sub></i> <i>e</i><sup><i>iπjm</i></sup></span>
+    </div>
+    <p class="caption"><b id="fxName">GELU</b> on <b id="fDom"></b>, <i>W</i> = <b id="fW"></b>, period 2 in <i>m</i></p>
+
+    <div class="plotwrap" id="plotwrap" aria-busy="true">
+      <div id="plot"></div>
+      <div class="overlay loading" id="overlay" role="status" aria-live="polite"><div class="spinner"></div><p id="ovText">Loading…</p></div>
+    </div>
+
+    <dl class="stats" aria-label="Statistics">
+      <div class="key"><dt>Chosen ke</dt><dd id="sKe">—</dd></div>
+      <div><dt>Max error</dt><dd id="sEmax">—</dd></div>
+      <div><dt>Mean error</dt><dd id="sEmean">—</dd></div>
+      <div><dt>Min error</dt><dd id="sEmin">—</dd></div>
+      <div class="key"><dt>Bit, −log₂(err max / max|f|)</dt><dd id="sBits">—</dd></div>
+      <div><dt>l1 = 2·Σ|c<sub>j</sub>|</dt><dd id="sL1">—</dd></div>
+      <div><dt>Estimated CKKS noise, 8.5·10⁻¹⁰·l1</dt><dd id="sNoise">—</dd></div>
+      <div class="key"><dt>Expected total bits</dt><dd id="sTot">—</dd></div>
+    </dl>
+    <p class="note" id="sNote"></p>
+
+    <details id="triedWrap" hidden>
+      <summary id="triedSum">ke search</summary>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>ke</th><th>err max</th><th>l1</th><th>score</th></tr></thead>
+          <tbody id="triedBody"></tbody>
+        </table>
+      </div>
+    </details>
+  </main>
+</div>
+<script>
+// ===================== Runs in the Web Worker (doubles only) =====================
+// Every function below is serialized with toString() into the worker source.
+
+// erf(x) for |x| ≤ 0.46875, first range of W. J. Cody's calerf
+function erfSmallCody(x) {
+  const ysq = x * x;
+  let xnum = 1.85777706184603153e-1 * ysq, xden = ysq;
+  xnum = (xnum + 3.16112374387056560e00) * ysq; xden = (xden + 2.36012909523441209e01) * ysq;
+  xnum = (xnum + 1.13864154151050156e02) * ysq; xden = (xden + 2.44024637934444173e02) * ysq;
+  xnum = (xnum + 3.77485237685302021e02) * ysq; xden = (xden + 1.28261652607737228e03) * ysq;
+  return x * (xnum + 3.20937758913846947e03) / (xden + 2.84423683343917062e03);
+}
+
+// erfc(x) via W. J. Cody's rational approximations (calerf), error ~1e-16
+function erfcCody(x) {
+  const y = Math.abs(x);
+  let r;
+  if (y <= 0.46875) return 1 - erfSmallCody(x);
+  if (y >= 27) {
+    r = 0;
+  } else {
+    if (y <= 4) {
+      let xnum = 2.15311535474403846e-8 * y, xden = y;
+      xnum = (xnum + 5.64188496988670089e-1) * y; xden = (xden + 1.57449261107098347e01) * y;
+      xnum = (xnum + 8.88314979438837594e00) * y; xden = (xden + 1.17693950891312499e02) * y;
+      xnum = (xnum + 6.61191906371416295e01) * y; xden = (xden + 5.37181101862009858e02) * y;
+      xnum = (xnum + 2.98635138197400131e02) * y; xden = (xden + 1.62138957456669019e03) * y;
+      xnum = (xnum + 8.81952221241769090e02) * y; xden = (xden + 3.29079923573345963e03) * y;
+      xnum = (xnum + 1.71204761263407058e03) * y; xden = (xden + 4.36261909014324716e03) * y;
+      xnum = (xnum + 2.05107837782607147e03) * y; xden = (xden + 3.43936767414372164e03) * y;
+      r = (xnum + 1.23033935479799725e03) / (xden + 1.23033935480374942e03);
+    } else {
+      const ysq = 1 / (y * y);
+      let xnum = 1.63153871373020978e-2 * ysq, xden = ysq;
+      xnum = (xnum + 3.05326634961232344e-1) * ysq; xden = (xden + 2.56852019228982242e00) * ysq;
+      xnum = (xnum + 3.60344899949804439e-1) * ysq; xden = (xden + 1.87295284992346725e00) * ysq;
+      xnum = (xnum + 1.25781726111229246e-1) * ysq; xden = (xden + 5.27905102951428412e-1) * ysq;
+      xnum = (xnum + 1.60837851487422766e-2) * ysq; xden = (xden + 6.05183413124413191e-2) * ysq;
+      r = ysq * (xnum + 6.58749161529837803e-4) / (xden + 2.33520497626869185e-3);
+      r = (5.6418958354775628695e-1 - r) / y;
+    }
+    const ys = Math.trunc(y * 16) / 16;
+    const del = (y - ys) * (y + ys);
+    r = Math.exp(-ys * ys) * Math.exp(-del) * r;
+  }
+  return x < 0 ? 2 - r : r;
+}
+
+// Double-precision helpers that compiled expressions may call (see compileJS)
+function erfDbl(x) { return Math.abs(x) <= 0.46875 ? erfSmallCody(x) : 1 - erfcCody(x); }
+function softplusDbl(x) { return x > 0 ? x + Math.log1p(Math.exp(-x)) : Math.log1p(Math.exp(x)); }
+
+function twiddles(n) {
+  if (twCache.n === n) return twCache;
+  const h = n >> 1, c = new Float64Array(h), s = new Float64Array(h);
+  for (let k = 0; k < h; k++) { const a = 2 * Math.PI * k / n; c[k] = Math.cos(a); s[k] = Math.sin(a); }
+  twCache.n = n; twCache.c = c; twCache.s = s;
+  return twCache;
+}
+
+// Iterative in-place radix-2 FFT. inverse=true: sums with e^{+2πi jt/n}, no normalization.
+function fft(re, im, inverse) {
+  const n = re.length;
+  for (let i = 1, j = 0; i < n; i++) {
+    let bit = n >> 1;
+    for (; j & bit; bit >>= 1) j ^= bit;
+    j ^= bit;
+    if (i < j) {
+      let t = re[i]; re[i] = re[j]; re[j] = t;
+      t = im[i]; im[i] = im[j]; im[j] = t;
+    }
+  }
+  const tw = twiddles(n), c = tw.c, s = tw.s, sg = inverse ? 1 : -1;
+  for (let len = 2; len <= n; len <<= 1) {
+    const half = len >> 1, step = n / len;
+    for (let i = 0; i < n; i += len) {
+      for (let j = 0, k = 0; j < half; j++, k += step) {
+        const wr = c[k], wi = sg * s[k];
+        const a = i + j, b = a + half;
+        const tr = re[b] * wr - im[b] * wi, ti = re[b] * wi + im[b] * wr;
+        re[b] = re[a] - tr; im[b] = im[a] - ti;
+        re[a] += tr; im[a] += ti;
+      }
+    }
+  }
+}
+
+// p(s) = (1−s)^n·T_A(s) + s^n·T_B(s−1)
+function hermiteEval(poly, s) {
+  const n = poly.ke, TA = poly.TA, TB = poly.TB, u = s - 1;
+  let ta = 0, tb = 0;
+  for (let i = n - 1; i >= 0; i--) { ta = ta * s + TA[i]; tb = tb * u + TB[i]; }
+  return Math.pow(1 - s, n) * ta + Math.pow(s, n) * tb;
+}
+
+// Bucket downsampling: keeps the min-error and max-error point of each bucket.
+function downsample(x, f, s, e, target) {
+  const n = x.length;
+  if (n <= target) return { x: Float64Array.from(x), f: Float64Array.from(f), s: Float64Array.from(s), e: Float64Array.from(e) };
+  const nb = target >> 1, idx = [0];
+  for (let b = 0; b < nb; b++) {
+    const i0 = Math.floor(b * n / nb), i1 = Math.floor((b + 1) * n / nb);
+    let imin = -1, imax = -1, vmin = Infinity, vmax = -Infinity;
+    for (let i = i0; i < i1; i++) {
+      const v = e[i];
+      if (!(v === v)) continue;
+      if (v < vmin) { vmin = v; imin = i; }
+      if (v > vmax) { vmax = v; imax = i; }
+    }
+    if (imin < 0) { idx.push(i0); continue; }
+    if (imin === imax) idx.push(imin);
+    else if (imin < imax) idx.push(imin, imax);
+    else idx.push(imax, imin);
+  }
+  idx.push(n - 1);
+  const m = idx.length, ox = new Float64Array(m), of = new Float64Array(m), os = new Float64Array(m), oe = new Float64Array(m);
+  let last = -1, k = 0;
+  for (let q = 0; q < m; q++) {
+    const i = idx[q];
+    if (i === last) continue;
+    last = i; ox[k] = x[i]; of[k] = f[i]; os[k] = s[i]; oe[k] = e[i]; k++;
+  }
+  return { x: ox.slice(0, k), f: of.slice(0, k), s: os.slice(0, k), e: oe.slice(0, k) };
+}
+
+async function computeJob(job, tick) {
+  const t0 = performance.now();
+  const L = job.L, U = job.U, d = job.d, W = U - L;
+  // job.js is generated by compileJS from a parsed expression, never raw user text
+  const fEval = new Function('x', '"use strict"; return ' + job.js + ';');
+  const nonFinite = (x) => ({ na: 'f(x) is not finite in double precision at x = ' + (+x.toPrecision(6)) +
+    ' (overflow, a pole, or a point outside its domain). Try a narrower domain.' });
+  const NOISE = 8.5e-10;
+  let M = 65536; while (M < 32 * d) M *= 2; if (M > (1 << 21)) M = 1 << 21;
+  let P = 32768; while (P < 4 * (d + 1)) P *= 2;
+  const half = M >> 1, Ph = P >> 1;
+
+  // original half of the sampling grid
+  const G0 = new Float64Array(half);
+  for (let i = 0; i < half; i++) {
+    const x = L + W * (2 * i / M), v = fEval(x);
+    if (!isFinite(v)) return nonFinite(x);
+    G0[i] = v;
+  }
+  // true values on the evaluation grid
+  const xP = new Float64Array(Ph), fP = new Float64Array(Ph);
+  let maxF = 0;
+  for (let t = 0; t < Ph; t++) {
+    const x = L + W * (2 * t / P); xP[t] = x; const v = fEval(x); fP[t] = v;
+    if (!isFinite(v)) return nonFinite(x);
+    const a = Math.abs(v); if (a > maxF) maxF = a;
+  }
+  { const v = fEval(U); if (!isFinite(v)) return nonFinite(U); const a = Math.abs(v); if (a > maxF) maxF = a; }
+
+  const re = new Float64Array(M), im = new Float64Array(M);
+  const vr = new Float64Array(P), vi = new Float64Array(P);
+
+  function coeffs(poly) {
+    re.set(G0); im.fill(0);
+    for (let i = 0; i < half; i++) re[half + i] = hermiteEval(poly, 2 * i / M);
+    fft(re, im, false);
+    const cr = new Float64Array(d + 1), ci = new Float64Array(d + 1);
+    let l1 = 0;
+    for (let j = 0; j <= d; j++) {
+      const xr = re[j] / M, xi = im[j] / M;
+      let a, b;
+      switch (j & 3) { // multiply by e^{iπj/2} = i^j
+        case 0: a = xr; b = xi; break;
+        case 1: a = -xi; b = xr; break;
+        case 2: a = -xr; b = -xi; break;
+        default: a = xi; b = -xr;
+      }
+      if (j === 0) { a /= 2; b /= 2; }
+      cr[j] = a; ci[j] = b; l1 += Math.hypot(a, b);
+    }
+    return { cr, ci, l1: 2 * l1 };
+  }
+
+  function series(c) { // values 2·Re v[t] over the whole period
+    vr.fill(0); vi.fill(0);
+    for (let j = 0; j <= d; j++) {
+      const a = c.cr[j], b = c.ci[j];
+      switch (j & 3) { // multiply by e^{−iπj/2} = (−i)^j
+        case 0: vr[j] = a; vi[j] = b; break;
+        case 1: vr[j] = b; vi[j] = -a; break;
+        case 2: vr[j] = -a; vi[j] = -b; break;
+        default: vr[j] = -b; vi[j] = a;
+      }
+    }
+    fft(vr, vi, true);
+    const out = new Float64Array(P);
+    for (let t = 0; t < P; t++) out[t] = 2 * vr[t];
+    return out;
+  }
+
+  const tried = [];
+  let best = null;
+  if (job.keMode === 'auto') {
+    const stride = P / 32768; // m_t = −1/2 + t/2^14, t < 2^14
+    let bestScore = Infinity, noImp = 0;
+    for (const poly of job.polys) {
+      if (!poly.finite) break;
+      await tick({ ke: poly.ke, phase: 'auto' });
+      const c = coeffs(poly);
+      if (!isFinite(c.l1)) break;
+      const ser = series(c);
+      let emax = 0;
+      for (let t = 0; t < Ph; t += stride) { const e = Math.abs(ser[t] - fP[t]); if (e > emax || e !== e) emax = e; }
+      const score = emax + NOISE * c.l1;
+      if (!isFinite(score)) break;
+      tried.push({ ke: poly.ke, emax, l1: c.l1, score });
+      if (score < bestScore) { bestScore = score; best = { poly, c, ser }; noImp = 0; }
+      else if (++noImp >= 6) break;
+    }
+    if (!best) return { na: 'No usable ke: the Hermite extension coefficients are already non-finite in double precision at ke = 1.' };
+  } else {
+    const poly = job.polys[0];
+    if (!poly || !poly.finite) return { na: 'ke = ' + job.keMode + ' is not usable: some T_A or T_B coefficients of the extension are non-finite in double precision. Try a smaller ke or "auto".' };
+    await tick({ ke: poly.ke, phase: 'manual' });
+    const c = coeffs(poly);
+    if (!isFinite(c.l1)) return { na: 'ke = ' + poly.ke + ' is not usable: the FFT of the extension produces non-finite values in double precision.' };
+    best = { poly, c, ser: series(c) };
+  }
+
+  const c = best.c, ser = best.ser, l1 = c.l1;
+  if (l1 > Math.pow(2, 200)) {
+    return { na: 'l1 = ' + l1.toExponential(3) + ' > 2^200: the series does not fit in the remaining modulus.', ke: best.poly.ke, l1, tried };
+  }
+  await tick({ ke: best.poly.ke, phase: 'final' });
+
+  // errors on the domain (IFFT grid)
+  const sD = ser.subarray(0, Ph);
+  const eAbs = new Float64Array(Ph), eRel = new Float64Array(Ph);
+  let emax = 0, emin = Infinity, esum = 0;
+  for (let t = 0; t < Ph; t++) {
+    const e = Math.abs(sD[t] - fP[t]);
+    eAbs[t] = e; eRel[t] = fP[t] !== 0 ? e / Math.abs(fP[t]) : NaN;
+    if (e > emax) emax = e; if (e < emin) emin = e; esum += e;
+  }
+  const noise = NOISE * l1;
+  const res = {
+    ke: best.poly.ke, tried, M, P, d,
+    emax, emin, emean: esum / Ph, maxF, l1, noise,
+    bits: -Math.log2(emax / maxF),
+    totalBits: -Math.log2((emax + noise) / maxF),
+  };
+
+  // extra log-spaced points (only for very wide positive domains): direct Horner evaluation
+  let X = xP, F = fP, S = sD, EA = eAbs, ER = eRel;
+  if (L > 0 && U / L >= 64) {
+    const nx = 768, ex = [];
+    const lr = Math.log(U / L), h = 2 * W / P;
+    for (let q = 0; q < nx; q++) {
+      const x = L * Math.exp(lr * q / nx);
+      if (x * lr / nx > h) break; // not needed where the grid is already denser than the log step
+      ex.push(x);
+    }
+    let emaxX = 0;
+    const n0 = ex.length;
+    const exS = new Float64Array(n0), exF = new Float64Array(n0);
+    for (let q = 0; q < n0; q++) {
+      const m = (ex[q] - L) / W - 0.5, zr = Math.cos(Math.PI * m), zi = Math.sin(Math.PI * m);
+      let ar = c.cr[d], ai = c.ci[d];
+      for (let j = d - 1; j >= 0; j--) { const nr = ar * zr - ai * zi + c.cr[j]; ai = ar * zi + ai * zr + c.ci[j]; ar = nr; }
+      exS[q] = 2 * ar; exF[q] = fEval(ex[q]);
+      const e = Math.abs(exS[q] - exF[q]); if (e > emaxX) emaxX = e;
+    }
+    res.emaxExtra = emaxX; res.nExtra = n0;
+    // merge sorted by x
+    const n = Ph + n0;
+    X = new Float64Array(n); F = new Float64Array(n); S = new Float64Array(n); EA = new Float64Array(n); ER = new Float64Array(n);
+    let i = 0, q = 0;
+    for (let k = 0; k < n; k++) {
+      if (q < n0 && (i >= Ph || ex[q] < xP[i])) { X[k] = ex[q]; F[k] = exF[q]; S[k] = exS[q]; q++; }
+      else { X[k] = xP[i]; F[k] = fP[i]; S[k] = sD[i]; i++; }
+      const e = Math.abs(S[k] - F[k]); EA[k] = e; ER[k] = F[k] !== 0 ? e / Math.abs(F[k]) : NaN;
+    }
+  }
+  res.domAbs = downsample(X, F, S, EA, 4000);
+  res.domRel = downsample(X, F, S, ER, 4000);
+
+  // extension: m ∈ [1/2, 3/2), s = m − 1/2, x = U + W·s
+  const xE = new Float64Array(Ph), pE = new Float64Array(Ph), sE = ser.subarray(Ph, P), eE = new Float64Array(Ph);
+  for (let t = 0; t < Ph; t++) {
+    const s = 2 * t / P; xE[t] = U + W * s;
+    const p = hermiteEval(best.poly, s); pE[t] = p; eE[t] = Math.abs(sE[t] - p);
+  }
+  res.ext = downsample(xE, pE, sE, eE, 4000);
+  res.time = performance.now() - t0;
+  return res;
+}
+
+// ===================== Runs on the main thread (decimal.js) =====================
+const KE_MAX = 40;
+let BINOM = null, D_PI = null, D_SQRTPI = null, D_SQRT2PI = null, D_SQRT2 = null;
+let D_ZERO, D_ONE, D_HALF, D_MHALF;
+
+function decInit() {
+  if (BINOM) return;
+  Decimal.set({ precision: 110, rounding: Decimal.ROUND_HALF_EVEN, minE: -9e15, maxE: 9e15 });
+  D_ZERO = new Decimal(0); D_ONE = new Decimal(1); D_HALF = new Decimal(0.5); D_MHALF = new Decimal(-0.5);
+  D_PI = Decimal.acos(-1);
+  D_SQRTPI = D_PI.sqrt();
+  D_SQRT2PI = D_PI.times(2).sqrt();
+  D_SQRT2 = new Decimal(2).sqrt();
+  const N = 2 * KE_MAX;
+  BINOM = [];
+  for (let a = 0; a <= N; a++) {
+    const row = new Array(a + 1);
+    row[0] = new Decimal(1); row[a] = new Decimal(1);
+    for (let b = 1; b < a; b++) row[b] = BINOM[a - 1][b - 1].plus(BINOM[a - 1][b]);
+    BINOM.push(row);
+  }
+}
+
+// erfc(z) for z ≥ 6 via Laplace's continued fraction
+function erfcLargeD(z) {
+  let t = z;
+  for (let k = 900; k >= 1; k--) t = z.plus(new Decimal(k).div(2).div(t));
+  return z.times(z).neg().exp().div(D_SQRTPI.times(t));
+}
+// erf(z) for |z| ≤ 6 via Taylor series
+function erfSmallD(z) {
+  const z2 = z.times(z), eps = new Decimal('1e-118');
+  let sum = new Decimal(0), term = z;
+  for (let n = 0; n < 5000; n++) {
+    const t = term.div(2 * n + 1);
+    sum = sum.plus(t);
+    if (n > 4 && t.abs().lt(eps)) break;
+    term = term.times(z2).neg().div(n + 1);
+  }
+  return sum.times(2).div(D_SQRTPI);
+}
+function PhiD(x) {
+  const z = x.div(D_SQRT2);
+  if (z.abs().lte(6)) return erfSmallD(z).plus(1).div(2);
+  if (z.isNeg()) return erfcLargeD(z.neg()).div(2);
+  return new Decimal(1).minus(erfcLargeD(z).div(2));
+}
+
+function erfD(z) {
+  if (z.abs().lte(6)) return erfSmallD(z);
+  return z.isNeg() ? erfcLargeD(z.neg()).minus(1) : D_ONE.minus(erfcLargeD(z));
+}
+function erfcD(z) {
+  if (z.gt(6)) return erfcLargeD(z);
+  if (z.lt(-6)) return new Decimal(2).minus(erfcLargeD(z.neg()));
+  return D_ONE.minus(erfSmallD(z));
+}
+
+// ===================== Expression parser =====================
+// expr  = term (('+' | '-') term)*
+// term  = unary (('*' | '/') unary | power)*        a bare juxtaposition is an implicit product: 2x, 3(x + 1)
+// unary = ('-' | '+') unary | power
+// power = atom ('^' unary)?                          right-associative; -x^2 = -(x^2)
+// atom  = number | x | pi | e | name '(' expr (',' expr)* ')' | '(' expr ')'
+class ExprError extends Error {}
+const EXPR_FUNCS = {
+  sin: 1, cos: 1, tan: 1, asin: 1, acos: 1, atan: 1, sinh: 1, cosh: 1, tanh: 1, asinh: 1, acosh: 1, atanh: 1,
+  exp: 1, log: 1, ln: 1, log2: 1, log10: 1, sqrt: 1, abs: 1, erf: 1, erfc: 1, phi: 1,
+  sigmoid: 1, softplus: 1, relu: 1, gelu: 1, silu: 1, pow: 2, min: 2, max: 2,
+};
+function tokenize(src) {
+  const toks = [];
+  let i = 0;
+  while (i < src.length) {
+    const ch = src[i], rest = src.slice(i);
+    if (/\s/.test(ch)) { i++; continue; }
+    let m = /^(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?/.exec(rest);
+    if (m) { toks.push({ k: 'num', v: m[0], pos: i }); i += m[0].length; continue; }
+    m = /^[A-Za-z_][A-Za-z_0-9]*/.exec(rest);
+    if (m) { toks.push({ k: 'id', v: m[0], pos: i }); i += m[0].length; continue; }
+    if (ch === 'π') { toks.push({ k: 'id', v: 'pi', pos: i }); i++; continue; }
+    if (rest.startsWith('**')) { toks.push({ k: 'op', v: '^', pos: i }); i += 2; continue; }
+    const op = { '+': '+', '-': '-', '−': '-', '*': '*', '×': '*', '·': '*', '/': '/', '÷': '/', '^': '^', '(': '(', ')': ')', ',': ',' }[ch];
+    if (op) { toks.push({ k: 'op', v: op, pos: i }); i++; continue; }
+    throw new ExprError('Unexpected character “' + ch + '” at position ' + (i + 1) + '.');
+  }
+  toks.push({ k: 'end', v: '', pos: src.length });
+  return toks;
+}
+function expandCall(name, args) {
+  const [a, b] = args;
+  const N = (v) => ({ t: 'num', v: String(v) }), bin = (op, l, r) => ({ t: 'bin', op, a: l, b: r });
+  const call = (fn, ...as) => ({ t: 'call', fn, args: as });
+  switch (name) {
+    case 'ln': return call('log', a);
+    case 'log2': return bin('/', call('log', a), call('log', N(2)));
+    case 'log10': return bin('/', call('log', a), call('log', N(10)));
+    case 'pow': return bin('^', a, b);
+    case 'relu': return call('max', a, N(0));
+    case 'gelu': return bin('*', a, call('phi', a));
+    case 'sigmoid': return bin('/', N(1), bin('+', N(1), call('exp', { t: 'neg', a })));
+    case 'silu': return bin('*', a, expandCall('sigmoid', [a]));
+  }
+  return call(name, ...args);
+}
+function parseExpr(src) {
+  if (!src.trim()) throw new ExprError('Write an expression in x, for example x * Phi(x).');
+  const toks = tokenize(src);
+  let p = 0;
+  const where = (t) => t.k === 'end' ? 'at the end' : 'at position ' + (t.pos + 1);
+  const what = (t) => t.k === 'end' ? 'end of input' : '“' + t.v + '”';
+  const isOp = (v) => toks[p].k === 'op' && toks[p].v === v;
+  const expect = (v) => {
+    if (!isOp(v)) throw new ExprError('Expected “' + v + '” ' + where(toks[p]) + ', found ' + what(toks[p]) + '.');
+    p++;
+  };
+  function expr() {
+    let a = term();
+    while (isOp('+') || isOp('-')) { const op = toks[p++].v; a = { t: 'bin', op, a, b: term() }; }
+    return a;
+  }
+  function term() {
+    let a = unary();
+    for (;;) {
+      if (isOp('*') || isOp('/')) { const op = toks[p++].v; a = { t: 'bin', op, a, b: unary() }; }
+      else if (toks[p].k === 'num' || toks[p].k === 'id' || isOp('(')) a = { t: 'bin', op: '*', a, b: power() };
+      else return a;
+    }
+  }
+  function unary() {
+    if (isOp('-')) { p++; return { t: 'neg', a: unary() }; }
+    if (isOp('+')) { p++; return unary(); }
+    return power();
+  }
+  function power() {
+    const a = atom();
+    if (isOp('^')) { p++; return { t: 'bin', op: '^', a, b: unary() }; }
+    return a;
+  }
+  function atom() {
+    const t = toks[p];
+    if (t.k === 'num') { p++; return { t: 'num', v: t.v }; }
+    if (isOp('(')) { p++; const e = expr(); expect(')'); return e; }
+    if (t.k === 'id') {
+      p++;
+      const name = t.v.toLowerCase();
+      if (name === 'x') return { t: 'x' };
+      if (name === 'pi' || name === 'e') return { t: 'const', v: name };
+      const ar = EXPR_FUNCS[name];
+      if (!ar) throw new ExprError('Unknown name “' + t.v + '”. The variable is x; see Syntax for the functions.');
+      if (!isOp('(')) throw new ExprError(t.v + ' needs parentheses, e.g. ' + t.v + (ar === 1 ? '(x)' : '(x, 2)') + '.');
+      p++;
+      const args = [expr()];
+      while (isOp(',')) { p++; args.push(expr()); }
+      expect(')');
+      if (args.length !== ar) throw new ExprError(t.v + ' takes ' + ar + ' argument' + (ar > 1 ? 's' : '') + ', got ' + args.length + '.');
+      return expandCall(name, args);
+    }
+    throw new ExprError('Unexpected ' + what(t) + ' ' + where(t) + '.');
+  }
+  const ast = expr();
+  if (toks[p].k !== 'end') throw new ExprError('Unexpected ' + what(toks[p]) + ' ' + where(toks[p]) + '.');
+  return { ast, js: compileJS(ast) };
+}
+function hasX(n) {
+  if (n.hasX === undefined) {
+    n.hasX = n.t === 'x' || (n.t === 'neg' ? hasX(n.a) : n.t === 'bin' ? hasX(n.a) || hasX(n.b) : n.t === 'call' ? n.args.some(c => hasX(c)) : false);
+  }
+  return n.hasX;
+}
+// AST → double-precision JS source; only whitelisted names can appear in the output
+const JS_FN = {
+  sin: 'Math.sin', cos: 'Math.cos', tan: 'Math.tan', asin: 'Math.asin', acos: 'Math.acos', atan: 'Math.atan',
+  sinh: 'Math.sinh', cosh: 'Math.cosh', tanh: 'Math.tanh', asinh: 'Math.asinh', acosh: 'Math.acosh', atanh: 'Math.atanh',
+  exp: 'Math.exp', log: 'Math.log', sqrt: 'Math.sqrt', abs: 'Math.abs', min: 'Math.min', max: 'Math.max',
+  erf: 'erfDbl', erfc: 'erfcCody', softplus: 'softplusDbl',
+};
+function compileJS(n) {
+  switch (n.t) {
+    case 'num': return '(' + Number(n.v) + ')';
+    case 'x': return 'x';
+    case 'const': return n.v === 'pi' ? 'Math.PI' : 'Math.E';
+    case 'neg': return '(-' + compileJS(n.a) + ')';
+    case 'bin':
+      if (n.op === '^') return 'Math.pow(' + compileJS(n.a) + ', ' + compileJS(n.b) + ')';
+      return '(' + compileJS(n.a) + ' ' + n.op + ' ' + compileJS(n.b) + ')';
+    case 'call':
+      if (n.fn === 'phi') return '(0.5 * erfcCody(-' + compileJS(n.args[0]) + ' * 0.7071067811865476))';
+      return JS_FN[n.fn] + '(' + n.args.map(compileJS).join(', ') + ')';
+  }
+  throw new ExprError('internal: unknown node');
+}
+
+// ===================== Truncated Taylor series ("jets") in decimal.js =====================
+// A jet of length N holds c_0..c_{N−1} with f(x0 + W·t) = Σ c_i t^i, i.e. c_i = f^(i)(x0)·W^i/i!.
+// Each operation uses the standard recurrences of Taylor-mode automatic differentiation.
+function jC(v, N) { const r = [v]; for (let i = 1; i < N; i++) r.push(D_ZERO); return r; }
+function jIsC(a) { for (let i = 1; i < a.length; i++) if (!a[i].isZero()) return false; return true; }
+function jAdd(a, b) { return a.map((v, i) => v.plus(b[i])); }
+function jSub(a, b) { return a.map((v, i) => v.minus(b[i])); }
+function jNeg(a) { return a.map(v => v.neg()); }
+function jScale(a, s) { return a.map(v => v.times(s)); }
+function jMul(a, b) {
+  if (jIsC(b)) return jScale(a, b[0]);
+  if (jIsC(a)) return jScale(b, a[0]);
+  const N = a.length, r = [];
+  for (let k = 0; k < N; k++) { let s = D_ZERO; for (let j = 0; j <= k; j++) s = s.plus(a[j].times(b[k - j])); r.push(s); }
+  return r;
+}
+function jDiv(a, b) {
+  if (b[0].isZero()) throw new ExprError('division by zero');
+  if (jIsC(b)) return jScale(a, D_ONE.div(b[0]));
+  const N = a.length, r = [];
+  for (let k = 0; k < N; k++) {
+    let s = a[k];
+    for (let j = 1; j <= k; j++) s = s.minus(b[j].times(r[k - j]));
+    r.push(s.div(b[0]));
+  }
+  return r;
+}
+// derivative in t (last entry is unknown and set to 0) and integral in t; jInt(v0, jDer(a)) = a
+function jDer(a) { const N = a.length, r = []; for (let k = 0; k < N - 1; k++) r.push(a[k + 1].times(k + 1)); r.push(D_ZERO); return r; }
+function jInt(v0, q) { const r = [v0]; for (let k = 1; k < q.length; k++) r.push(q[k - 1].div(k)); return r; }
+function jExp(a) {
+  const N = a.length, r = [a[0].exp()];
+  for (let k = 1; k < N; k++) {
+    let s = D_ZERO;
+    for (let j = 1; j <= k; j++) if (!a[j].isZero()) s = s.plus(a[j].times(j).times(r[k - j]));
+    r.push(s.div(k));
+  }
+  return r;
+}
+function jLog(a) {
+  if (a[0].lte(0)) throw new ExprError('log of a non-positive value');
+  const N = a.length, r = [a[0].ln()];
+  for (let k = 1; k < N; k++) {
+    let s = D_ZERO;
+    for (let j = 1; j < k; j++) s = s.plus(r[j].times(j).times(a[k - j]));
+    r.push(a[k].minus(s.div(k)).div(a[0]));
+  }
+  return r;
+}
+function jPowC(a, r) { // a^r with r constant
+  const N = a.length, a0 = a[0];
+  if (r.isInteger() && r.abs().lte(1e6)) {
+    let n = r.abs().toNumber(), res = jC(D_ONE, N), base = a;
+    while (n > 0) { if (n % 2) res = jMul(res, base); n = Math.floor(n / 2); if (n) base = jMul(base, base); }
+    return r.isNeg() ? jDiv(jC(D_ONE, N), res) : res;
+  }
+  if (a0.lte(0)) throw new ExprError('non-integer power of a ' + (a0.isZero() ? 'zero' : 'negative') + ' value');
+  const r1 = r.plus(1), p = [a0.pow(r)];
+  for (let k = 1; k < N; k++) {
+    let s = D_ZERO;
+    for (let j = 1; j <= k; j++) if (!a[j].isZero()) s = s.plus(a[j].times(r1.times(j).minus(k)).times(p[k - j]));
+    p.push(s.div(a0.times(k)));
+  }
+  return p;
+}
+function jTrigPair(a, hyper) { // [sin a, cos a] or [sinh a, cosh a]
+  const N = a.length, s = [hyper ? a[0].sinh() : a[0].sin()], c = [hyper ? a[0].cosh() : a[0].cos()];
+  for (let k = 1; k < N; k++) {
+    let ss = D_ZERO, cc = D_ZERO;
+    for (let j = 1; j <= k; j++) {
+      if (a[j].isZero()) continue;
+      const ja = a[j].times(j);
+      ss = ss.plus(ja.times(c[k - j])); cc = cc.plus(ja.times(s[k - j]));
+    }
+    s.push(ss.div(k)); c.push(hyper ? cc.div(k) : cc.neg().div(k));
+  }
+  return [s, c];
+}
+// t = tan a (sgn = +1) or tanh a (sgn = −1) via t' = (1 + sgn·t²)·a'. Avoids sinh/cosh, whose ratio
+// would cancel catastrophically for large |a|. u0 = 1 + sgn·t0² is passed in, computed as 1/cos² or 1/cosh².
+function jRiccati(a, t0, u0, sgn) {
+  const N = a.length, t = [t0], u = [u0];
+  for (let k = 1; k < N; k++) {
+    let s = D_ZERO;
+    for (let j = 1; j <= k; j++) if (!a[j].isZero()) s = s.plus(a[j].times(j).times(u[k - j]));
+    t.push(s.div(k));
+    let q = D_ZERO;
+    for (let i = 0; i <= k; i++) q = q.plus(t[i].times(t[k - i]));
+    u.push(sgn > 0 ? q : q.neg());
+  }
+  return t;
+}
+function jCall(fn, args) {
+  const a = args[0], a0 = a[0], N = a.length, one = jC(D_ONE, N);
+  const da = () => jDer(a), sq = () => jMul(a, a);
+  switch (fn) {
+    case 'sin': return jTrigPair(a, false)[0];
+    case 'cos': return jTrigPair(a, false)[1];
+    case 'sinh': return jTrigPair(a, true)[0];
+    case 'cosh': return jTrigPair(a, true)[1];
+    case 'tan': {
+      const c = a0.cos();
+      if (c.isZero()) throw new ExprError('tan has a pole here');
+      return jRiccati(a, a0.tan(), D_ONE.div(c.times(c)), 1);
+    }
+    case 'tanh': { const c = a0.cosh(); return jRiccati(a, a0.tanh(), D_ONE.div(c.times(c)), -1); }
+    case 'exp': return jExp(a);
+    case 'log': return jLog(a);
+    case 'sqrt': return jPowC(a, D_HALF);
+    case 'abs':
+      if (a0.isZero()) throw new ExprError('abs is not differentiable at 0');
+      return a0.isNeg() ? jNeg(a) : a;
+    case 'min': case 'max': {
+      const b = args[1], c = a0.cmp(b[0]);
+      if (c === 0) throw new ExprError(fn + ' has a kink here (its two arguments are equal)');
+      return (c > 0) === (fn === 'max') ? a : b;
+    }
+    case 'asin': case 'acos': {
+      if (a0.abs().gte(1)) throw new ExprError(fn + ' needs |argument| < 1');
+      const q = jMul(da(), jPowC(jSub(one, sq()), D_MHALF));
+      return fn === 'asin' ? jInt(a0.asin(), q) : jInt(a0.acos(), jNeg(q));
+    }
+    case 'atan': return jInt(a0.atan(), jDiv(da(), jAdd(one, sq())));
+    case 'asinh': return jInt(a0.asinh(), jMul(da(), jPowC(jAdd(one, sq()), D_MHALF)));
+    case 'acosh':
+      if (a0.lte(1)) throw new ExprError('acosh needs argument > 1');
+      return jInt(a0.acosh(), jMul(da(), jPowC(jSub(sq(), one), D_MHALF)));
+    case 'atanh':
+      if (a0.abs().gte(1)) throw new ExprError('atanh needs |argument| < 1');
+      return jInt(a0.atanh(), jDiv(da(), jSub(one, sq())));
+    case 'erf': case 'erfc': {
+      const q = jScale(jMul(da(), jExp(jNeg(sq()))), new Decimal(2).div(D_SQRTPI));
+      return fn === 'erf' ? jInt(erfD(a0), q) : jInt(erfcD(a0), jNeg(q));
+    }
+    case 'phi': return jInt(PhiD(a0), jScale(jMul(da(), jExp(jScale(sq(), D_MHALF))), D_ONE.div(D_SQRT2PI)));
+    case 'softplus': {
+      const sig = jDiv(one, jAdd(one, jExp(jNeg(a))));
+      const v0 = a0.gt(0) ? a0.plus(a0.neg().exp().plus(1).ln()) : a0.exp().plus(1).ln();
+      return jInt(v0, jMul(da(), sig));
+    }
+  }
+  throw new ExprError('internal: unknown function ' + fn);
+}
+function jetEval(root, x0, W, N) {
+  const memo = new Map();
+  const ev = (n) => {
+    let r = memo.get(n);
+    if (!r) { r = evNode(n); memo.set(n, r); }
+    return r;
+  };
+  const evNode = (n) => {
+    switch (n.t) {
+      case 'num': return jC(new Decimal(n.v), N);
+      case 'const': return jC(n.v === 'pi' ? D_PI : D_ONE.exp(), N);
+      case 'x': { const r = jC(x0, N); if (N > 1) r[1] = W; return r; }
+      case 'neg': return jNeg(ev(n.a));
+      case 'call': return jCall(n.fn, n.args.map(ev));
+      case 'bin': {
+        const a = ev(n.a), b = ev(n.b);
+        switch (n.op) {
+          case '+': return jAdd(a, b);
+          case '-': return jSub(a, b);
+          case '*': return jMul(a, b);
+          case '/': return jDiv(a, b);
+        }
+        if (!hasX(n.b)) return jPowC(a, b[0]);
+        if (!hasX(n.a)) {
+          if (a[0].lte(0)) throw new ExprError('c^(…) needs a positive base c');
+          return jExp(jScale(b, a[0].ln()));
+        }
+        return jExp(jMul(b, jLog(a)));
+      }
+    }
+    throw new ExprError('internal: unknown node');
+  };
+  return ev(root);
+}
+
+// a_i = f^(i)(U)·W^i/i!, b_i = f^(i)(L)·W^i/i!
+function prepTaylor(ast, Ld, Ud) {
+  decInit();
+  const W = Ud.minus(Ld);
+  const side = (x0, name) => {
+    const at = name + ' = ' + x0.toSignificantDigits(8).toString();
+    let c;
+    try { c = jetEval(ast, x0, W, KE_MAX); }
+    catch (e) {
+      if (e instanceof ExprError) throw new ExprError('Cannot expand f at ' + at + ': ' + e.message + '. The extension needs f to be smooth at both endpoints.');
+      throw e;
+    }
+    if (c.some(v => !v.isFinite())) throw new ExprError('f or its derivatives are not finite at ' + at + '.');
+    return c;
+  };
+  return { a: side(Ud, 'U'), b: side(Ld, 'L') };
+}
+
+function hermitePoly(tay, n) {
+  const TA = new Float64Array(n), TB = new Float64Array(n);
+  let finite = true;
+  for (let i = 0; i < n; i++) {
+    let sa = new Decimal(0), sb = new Decimal(0);
+    for (let k = 0; k <= i; k++) {
+      const C = BINOM[n - 1 + i - k][i - k];
+      sa = sa.plus(tay.a[k].times(C));
+      const tb = tay.b[k].times(C);
+      sb = (i - k) % 2 === 0 ? sb.plus(tb) : sb.minus(tb);
+    }
+    TA[i] = sa.toNumber(); TB[i] = sb.toNumber();
+    if (!isFinite(TA[i]) || !isFinite(TB[i])) finite = false;
+  }
+  return { ke: n, TA, TB, finite };
+}
+
+</script>
+<script>
+var twCache = {};
+const NOISE_PER_L1 = 8.5e-10;
+const WORKER_SRC = 'var twCache = {};\n' +
+  [erfSmallCody, erfcCody, erfDbl, softplusDbl, twiddles, fft, hermiteEval, downsample, computeJob].map(f => f.toString()).join('\n\n') + `
+self.onmessage = async (ev) => {
+  const job = ev.data;
+  try {
+    const res = await computeJob(job, (p) => { self.postMessage({ type: 'progress', id: job.id, p }); });
+    self.postMessage({ type: 'done', id: job.id, res });
+  } catch (e) {
+    self.postMessage({ type: 'error', id: job.id, msg: String((e && e.message) || e) });
+  }
+};
+self.postMessage({ type: 'ready' });`;
+
+const PRESETS = {
+  gelu: { label: 'GELU', expr: 'x * Phi(x)', dom: 'sym' },
+  sin: { label: 'sin', expr: 'sin(x)', dom: 'sym' },
+  cos: { label: 'cos', expr: 'cos(x)', dom: 'sym' },
+  exp: { label: 'exp', expr: 'exp(x)', dom: 'sym' },
+  rsqrt: { label: '1/√x', expr: '1/sqrt(x)', dom: 'pos' },
+  recip: { label: '1/x', expr: '1/x', dom: 'pos' },
+  sigmoid: { label: 'sigmoid', expr: 'sigmoid(x)', dom: 'sym' },
+  tanh: { label: 'tanh', expr: 'tanh(x)', dom: 'sym' },
+};
+for (const p of Object.values(PRESETS)) p.js = parseExpr(p.expr).js;
+const state = { preset: 'gelu', src: PRESETS.gelu.expr, ast: null, js: PRESETS.gelu.js, dom: 'sym',
+  k: 3, e: 10, keAuto: true, keMan: 8, xlog: false, showExt: false, err: 'abs' };
+state.ast = parseExpr(state.src).ast;
+const $ = (id) => document.getElementById(id);
+
+// ---------- formatting ----------
+const SUP = { '-': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+function sci(v, p = 3) {
+  if (v === 0) return '0';
+  if (!isFinite(v)) return String(v);
+  const a = Math.abs(v);
+  if (a >= 1e-3 && a < 1e5) return v.toPrecision(p);
+  const [m, ex] = v.toExponential(p - 1).split('e');
+  return m + ' × 10' + String(+ex).split('').map(c => SUP[c] || c).join('');
+}
+function num(v) {
+  const s = Number.isInteger(v) ? String(v) : v.toPrecision(6).replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+  return s.replace('-', '−');
+}
+function domainOf(dom, k) { return dom === 'pos' ? [Math.pow(2, -k), Math.pow(2, k)] : [-Math.pow(2, k), Math.pow(2, k)]; }
+function pow2Label(e) { return '2' + String(e).split('').map(c => SUP[c]).join(''); }
+
+// ---------- cache ----------
+const resultCache = new Map();
+const polyCache = new Map();
+function cacheSet(key, val) {
+  resultCache.set(key, val);
+  if (resultCache.size > 80) resultCache.delete(resultCache.keys().next().value);
+}
+function getPolys(ast, js, dom, k, keKey) {
+  const pk = js + '#' + dom + '#' + k;
+  let ent = polyCache.get(pk);
+  if (!ent) {
+    const Ld = dom === 'pos' ? new Decimal(2).pow(-k) : new Decimal(2).pow(k).neg();
+    const Ud = new Decimal(2).pow(k);
+    ent = { tay: prepTaylor(ast, Ld, Ud), polys: new Map() };
+    polyCache.set(pk, ent);
+    if (polyCache.size > 40) polyCache.delete(polyCache.keys().next().value);
+  }
+  const get = (n) => { if (!ent.polys.has(n)) ent.polys.set(n, hermitePoly(ent.tay, n)); return ent.polys.get(n); };
+  if (keKey !== 'auto') return [get(keKey)];
+  const out = [];
+  for (let n = 1; n <= KE_MAX; n++) { const p = get(n); out.push(p); if (!p.finite) break; }
+  return out;
+}
+
+// ---------- worker ----------
+let worker = null, workerOK = typeof Worker !== 'undefined', workerBusy = false, workerEverReady = false;
+let curId = 0, pendingJob = null, readyTimer = null;
+function killWorker() { if (worker) { worker.terminate(); worker = null; } workerBusy = false; clearTimeout(readyTimer); }
+function fallbackToMain() {
+  workerOK = false; killWorker();
+  if (pendingJob && pendingJob.id === curId) runMain(pendingJob);
+}
+function ensureWorker() {
+  if (worker) return worker;
+  try {
+    const url = URL.createObjectURL(new Blob([WORKER_SRC], { type: 'text/javascript' }));
+    worker = new Worker(url);
+  } catch (e) { workerOK = false; worker = null; return null; }
+  worker.ready = false;
+  worker.onmessage = (ev) => {
+    const m = ev.data;
+    if (m.type === 'ready') { worker.ready = true; workerEverReady = true; clearTimeout(readyTimer); return; }
+    if (m.id !== curId) return;
+    if (m.type === 'progress') setProgress(m.p);
+    else if (m.type === 'done') { workerBusy = false; finish(pendingJob, m.res); }
+    else if (m.type === 'error') { workerBusy = false; showNA('Computation error: ' + m.msg); }
+  };
+  worker.onerror = (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    if (!workerEverReady) fallbackToMain();
+    else { workerBusy = false; showNA('Worker error: ' + ((e && e.message) || 'unknown')); }
+  };
+  if (!workerEverReady) {
+    clearTimeout(readyTimer);
+    readyTimer = setTimeout(() => { if (!workerEverReady) fallbackToMain(); }, 4000);
+  }
+  return worker;
+}
+function dispatch(job) {
+  job.id = curId; pendingJob = job;
+  if (workerOK) {
+    if (workerBusy) killWorker();
+    const w = ensureWorker();
+    if (w) { workerBusy = true; w.postMessage(job); return; }
+  }
+  runMain(job);
+}
+async function runMain(job) { // fallback when blob workers are not allowed
+  const tick = async (p) => {
+    if (job.id !== curId) throw { cancel: true };
+    setProgress(p);
+    await new Promise(r => setTimeout(r, 0));
+    if (job.id !== curId) throw { cancel: true };
+  };
+  try { const res = await computeJob(job, tick); if (job.id === curId) finish(job, res); }
+  catch (e) { if (!(e && e.cancel)) showNA('Computation error: ' + ((e && e.message) || e)); }
+}
+function cancelRunning() { curId++; if (workerBusy) killWorker(); }
+
+// ---------- main flow ----------
+let schedTimer = null, current = null;
+function keyOf() { return [state.js, state.dom, state.k, Math.pow(2, state.e), state.keAuto ? 'auto' : state.keMan].join('|'); }
+function schedule(delay = 140) { updateLabels(); clearTimeout(schedTimer); schedTimer = setTimeout(run, delay); }
+function run() {
+  const { ast, js, dom, k } = state, d = Math.pow(2, state.e);
+  const keKey = state.keAuto ? 'auto' : state.keMan;
+  cancelRunning();
+  if (dom === 'pos' && k === 0) return showNA('With a positive domain and k = 0, [2⁰, 2⁰] = [1, 1] is degenerate. Choose k ≥ 1.');
+  const key = keyOf();
+  if (resultCache.has(key)) return showResult(resultCache.get(key));
+  if (typeof Decimal === 'undefined') return showNA('decimal.js failed to load from cdnjs: reload the page.');
+  showLoading('Preparing high-precision Hermite coefficients…');
+  const myId = curId;
+  setTimeout(() => {
+    if (myId !== curId) return;
+    let polys;
+    try { polys = getPolys(ast, js, dom, k, keKey); }
+    catch (e) { return showNA(e instanceof ExprError ? e.message : 'decimal.js error: ' + e.message); }
+    if (myId !== curId) return;
+    const [L, U] = domainOf(dom, k);
+    dispatch({ js, k, L, U, d, keMode: keKey, polys, key });
+  }, 30);
+}
+function finish(job, res) {
+  res.key = job.key; res.keMode = job.keMode; res.k = job.k;
+  res.L = job.L; res.U = job.U;
+  cacheSet(job.key, res);
+  if (job.key === keyOf()) showResult(res);
+}
+
+// ---------- UI ----------
+function setProgress(p) {
+  let t;
+  if (p.phase === 'auto') t = 'Automatic search: trying ke = ' + p.ke + '…';
+  else if (p.phase === 'manual') t = 'Coefficients with ke = ' + p.ke + '…';
+  else t = 'Evaluating the series with ke = ' + p.ke + '…';
+  $('ovText').textContent = t;
+}
+function showLoading(text) {
+  const ov = $('overlay');
+  ov.className = 'overlay loading';
+  $('ovText').textContent = text;
+  $('plotwrap').setAttribute('aria-busy', 'true');
+}
+function showNA(msg) {
+  current = null;
+  const ov = $('overlay');
+  ov.className = 'overlay na';
+  $('ovText').textContent = msg;
+  $('plotwrap').setAttribute('aria-busy', 'false');
+  if (window.Plotly) Plotly.purge($('plot'));
+  renderStats(null);
+}
+function showResult(res) {
+  if (res.na) {
+    showNA(res.na);
+    if (res.ke) renderStats({ naInfo: res });
+    return;
+  }
+  current = res;
+  $('overlay').className = 'overlay';
+  $('plotwrap').setAttribute('aria-busy', 'false');
+  if (state.keAuto) { $('ke').value = res.ke; $('keOut').textContent = 'ke = ' + res.ke + ' (auto)'; }
+  draw();
+  renderStats(res);
+}
+
+function updateLabels() {
+  const { k } = state, d = Math.pow(2, state.e);
+  const [L, U] = domainOf(state.dom, k);
+  $('kOut').textContent = 'k = ' + k;
+  $('domHint').textContent = state.dom === 'pos'
+    ? 'Domain [2⁻' + String(k).split('').map(c => SUP[c]).join('') + ', ' + pow2Label(k) + '] = [' + num(L) + ', ' + num(U) + ']'
+    : 'Domain [−' + pow2Label(k) + ', ' + pow2Label(k) + '] = [' + num(L) + ', ' + num(U) + ']';
+  $('dOut').textContent = 'd = ' + pow2Label(state.e) + ' = ' + d;
+  $('ke').disabled = state.keAuto;
+  if (!state.keAuto) $('keOut').textContent = 'ke = ' + state.keMan;
+  else if (!current || current.key !== keyOf()) $('keOut').textContent = 'ke: automatic';
+  const logOK = L > 0;
+  $('xlog').disabled = !logOK;
+  $('xlogHint').hidden = logOK;
+  // formula
+  $('fxName').textContent = state.preset !== 'custom' ? PRESETS[state.preset].label : 'f(x) = ' + state.src;
+  $('fD').textContent = d;
+  $('fDom').textContent = '[' + num(L) + ', ' + num(U) + ']';
+  $('fW').textContent = num(U - L);
+}
+
+function renderStats(res) {
+  const set = (id, v) => { $(id).textContent = v; };
+  const ids = ['sKe', 'sEmax', 'sEmean', 'sEmin', 'sBits', 'sL1', 'sNoise', 'sTot'];
+  if (!res) { ids.forEach(i => set(i, '—')); $('sNote').textContent = ''; $('triedWrap').hidden = true; return; }
+  if (res.naInfo) {
+    ids.forEach(i => set(i, '—'));
+    set('sKe', res.naInfo.ke); set('sL1', sci(res.naInfo.l1));
+    $('sNote').textContent = '';
+    renderTried(res.naInfo);
+    return;
+  }
+  set('sKe', res.ke + (res.keMode === 'auto' ? ' (auto)' : ''));
+  set('sEmax', sci(res.emax)); set('sEmean', sci(res.emean)); set('sEmin', sci(res.emin));
+  set('sBits', res.bits.toFixed(2)); set('sL1', sci(res.l1));
+  set('sNoise', sci(res.noise)); set('sTot', res.totalBits.toFixed(2));
+  let note = 'FFT on M = ' + pow2Label(Math.log2(res.M)) + ' samples, series evaluated on P = ' + pow2Label(Math.log2(res.P)) +
+    ' points, ' + (res.time / 1000).toFixed(2) + ' s. Bits relative to max|f| = ' + sci(res.maxF) + '.';
+  if (res.emaxExtra && res.emaxExtra > res.emax * 1.01)
+    note += ' On the ' + res.nExtra + ' extra log-spaced points near L, the max error rises to ' + sci(res.emaxExtra) + '.';
+  $('sNote').textContent = note;
+  renderTried(res);
+}
+function renderTried(res) {
+  const tr = res.tried || [];
+  if (!tr.length) { $('triedWrap').hidden = true; return; }
+  $('triedWrap').hidden = false;
+  $('triedSum').textContent = 'ke search: ' + tr.length + ' values tried';
+  const best = res.ke;
+  $('triedBody').innerHTML = tr.map(t =>
+    '<tr' + (t.ke === best ? ' class="best"' : '') + '><td>' + t.ke + '</td><td>' + sci(t.emax) + '</td><td>' + sci(t.l1) +
+    '</td><td>' + sci(t.score) + '</td></tr>').join('');
+}
+
+function cssv(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+function draw() {
+  const res = current;
+  if (!res || !window.Plotly) {
+    if (!window.Plotly) showNA('Plotly failed to load from cdnjs: reload the page.');
+    return;
+  }
+  const C = { f: cssv('--c-f'), s: cssv('--c-s'), ext: cssv('--c-ext'), err: cssv('--c-err'), errExt: cssv('--c-err-ext'), noise: cssv('--c-noise'),
+    ink: cssv('--ink'), muted: cssv('--muted'), rule: cssv('--rule'), grid: cssv('--grid') };
+  const mode = state.err, maxF = res.maxF;
+  const D = mode === 'rel' ? res.domRel : res.domAbs, E = res.ext;
+  const errT = (e, f) => {
+    if (mode === 'bit') return e > 0 ? -Math.log2(e / maxF) : null;
+    if (mode === 'rel') { const r = f !== undefined ? (f !== 0 ? e / Math.abs(f) : NaN) : e; return r > 0 && isFinite(r) ? r : null; }
+    return e > 0 && isFinite(e) ? e : null;
+  };
+  const xd = Array.from(D.x), dd = Math.pow(2, state.e);
+  const traces = [
+    { x: xd, y: Array.from(D.f), name: 'f(x)', mode: 'lines', line: { color: C.f, width: 2 }, legendgroup: 'f' },
+    { x: xd, y: Array.from(D.s), name: 'series, d = ' + dd, mode: 'lines', line: { color: C.s, width: 2, dash: 'dash' }, legendgroup: 's' },
+  ];
+  const ey = Array.from(D.e, e => errT(e));
+  traces.push({ x: xd, y: ey, name: mode === 'abs' ? '|series − f|' : mode === 'rel' ? '|series − f| / |f|' : 'bits of precision',
+    mode: 'lines', line: { color: C.err, width: 1.2 }, yaxis: 'y2', legendgroup: 'e' });
+  const [L, U] = [res.L, res.U], W = U - L;
+  let xmax = U;
+  if (state.showExt) {
+    xmax = U + W;
+    const xe = Array.from(E.x);
+    traces.push({ x: xe, y: Array.from(E.f), name: 'extension p(s)', mode: 'lines', line: { color: C.ext, width: 2 }, legendgroup: 'p' });
+    traces.push({ x: xe, y: Array.from(E.s), name: 'series on the extension', mode: 'lines', line: { color: C.s, width: 2, dash: 'dash' }, legendgroup: 's', showlegend: false });
+    traces.push({ x: xe, y: Array.from(E.e, (e, i) => errT(e, mode === 'rel' ? E.f[i] : undefined)), name: 'error on the extension',
+      mode: 'lines', line: { color: C.errExt, width: 1 }, yaxis: 'y2', legendgroup: 'pe' });
+  }
+  let nLevel = mode === 'bit' ? -Math.log2(res.noise / maxF) : mode === 'rel' ? res.noise / maxF : res.noise;
+  if (isFinite(nLevel) && nLevel > 0) {
+    traces.push({ x: [L, xmax], y: [nLevel, nLevel], name: mode === 'rel' ? 'estimated CKKS noise / max|f|' : 'estimated CKKS noise',
+      mode: 'lines', line: { color: C.noise, width: 1.5, dash: 'dot' }, yaxis: 'y2', hoverinfo: 'name+y' });
+  }
+  const xlog = state.xlog && L > 0;
+  const axisBase = { gridcolor: C.grid, linecolor: C.rule, zerolinecolor: C.rule, tickfont: { color: C.muted }, title: { font: { color: C.muted } } };
+  const layout = {
+    paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
+    font: { family: cssv('--font-ui'), color: C.ink, size: 12 },
+    margin: { l: 64, r: 12, t: 8, b: 46 },
+    hovermode: 'x unified', hoverlabel: { bgcolor: cssv('--surface'), bordercolor: C.rule, font: { color: C.ink } },
+    showlegend: true,
+    legend: { orientation: 'h', x: 0, y: -0.12, yanchor: 'top', font: { color: C.muted } },
+    xaxis: Object.assign({}, axisBase, { anchor: 'y2', type: xlog ? 'log' : 'linear', title: { text: 'x', font: { color: C.muted } },
+      range: xlog ? [Math.log10(L), Math.log10(xmax)] : [L, xmax], exponentformat: 'power' }),
+    yaxis: Object.assign({}, axisBase, { domain: [0.42, 1], title: { text: 'f(x) and series', font: { color: C.muted } }, exponentformat: 'power' }),
+    yaxis2: Object.assign({}, axisBase, { domain: [0, 0.33], type: mode === 'bit' ? 'linear' : 'log',
+      title: { text: mode === 'abs' ? 'absolute error' : mode === 'rel' ? 'relative error' : 'bits', font: { color: C.muted } }, exponentformat: 'power' }),
+    shapes: state.showExt ? [{ type: 'line', xref: 'x', yref: 'paper', x0: U, x1: U, y0: 0, y1: 1, line: { color: C.muted, width: 1, dash: 'dot' } }] : [],
+    annotations: state.showExt ? [{ x: xlog ? Math.log10(U) : U, y: 1, xref: 'x', yref: 'paper', text: 'U, start of the extension', showarrow: false,
+      xanchor: 'right', yanchor: 'top', xshift: -4, font: { size: 11, color: C.muted } }] : [],
+    uirevision: [state.js, state.dom, state.k, state.showExt, xlog, mode].join('|'),
+  };
+  Plotly.react($('plot'), traces, layout, { responsive: true, displaylogo: false, modeBarButtonsToRemove: ['select2d', 'lasso2d'] });
+}
+
+// ---------- theme ----------
+const THEMES = ['auto', 'light', 'dark'], THEME_LABEL = { auto: 'Theme: system', light: 'Theme: light', dark: 'Theme: dark' };
+let theme = 'auto';
+try { theme = localStorage.getItem('fefbt-theme') || 'auto'; } catch (e) { }
+function applyTheme() {
+  if (theme === 'auto') delete document.documentElement.dataset.theme;
+  else document.documentElement.dataset.theme = theme;
+  $('themeBtn').textContent = THEME_LABEL[theme];
+  if (current) draw();
+}
+
+// ---------- control wiring ----------
+function setDom(dom) {
+  state.dom = dom;
+  $('dSym').checked = dom === 'sym'; $('dPos').checked = dom === 'pos';
+  // on a positive domain the logarithmic axis is the natural default
+  state.xlog = dom === 'pos'; $('xlog').checked = state.xlog; $('xlin').checked = !state.xlog;
+}
+let exprTimer = null;
+function applyExpr() {
+  clearTimeout(exprTimer);
+  const src = $('expr').value;
+  let parsed;
+  try { parsed = parseExpr(src); }
+  catch (err) {
+    if (!(err instanceof ExprError)) throw err;
+    $('exprBox').classList.add('bad');
+    $('exprMsg').className = 'hint bad';
+    $('exprMsg').textContent = err.message;
+    return;
+  }
+  $('exprBox').classList.remove('bad');
+  $('exprMsg').className = 'hint';
+  $('exprMsg').textContent = 'Edit to use any expression in x; Enter applies it.';
+  state.src = src.trim(); state.ast = parsed.ast; state.js = parsed.js;
+  state.preset = Object.keys(PRESETS).find(p => PRESETS[p].js === parsed.js) || 'custom';
+  $('f').value = state.preset;
+  schedule(0);
+}
+
+function init() {
+  $('f').addEventListener('change', e => {
+    const v = e.target.value;
+    if (v === 'custom') { state.preset = 'custom'; updateLabels(); $('expr').focus(); $('expr').select(); return; }
+    $('expr').value = PRESETS[v].expr;
+    setDom(PRESETS[v].dom);
+    applyExpr();
+  });
+  $('expr').addEventListener('input', () => { clearTimeout(exprTimer); exprTimer = setTimeout(applyExpr, 500); });
+  $('expr').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); applyExpr(); } });
+  $('dSym').addEventListener('change', () => { setDom('sym'); schedule(0); });
+  $('dPos').addEventListener('change', () => { setDom('pos'); schedule(0); });
+  $('k').addEventListener('input', e => { state.k = +e.target.value; schedule(); });
+  $('d').addEventListener('input', e => { state.e = +e.target.value; schedule(); });
+  $('keAuto').addEventListener('change', e => { state.keAuto = e.target.checked; if (!state.keAuto) state.keMan = +$('ke').value; schedule(0); });
+  $('ke').addEventListener('input', e => { state.keMan = +e.target.value; schedule(); });
+  $('xlog').addEventListener('change', e => { state.xlog = e.target.checked; draw(); });
+  $('xlin').addEventListener('change', e => { state.xlog = !e.target.checked; draw(); });
+  $('showExt').addEventListener('change', e => { state.showExt = e.target.checked; draw(); });
+  document.querySelectorAll('input[name="err"]').forEach(r => r.addEventListener('change', e => { state.err = e.target.value; draw(); }));
+  $('themeBtn').addEventListener('click', () => {
+    theme = THEMES[(THEMES.indexOf(theme) + 1) % 3];
+    try { localStorage.setItem('fefbt-theme', theme); } catch (e) { }
+    applyTheme();
+  });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (current) draw(); });
+  applyTheme();
+  updateLabels();
+  run();
+}
+document.addEventListener('DOMContentLoaded', init);
+
+</script>
+</body>
+</html>
