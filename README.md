@@ -2,6 +2,11 @@
 
 An interactive, single-page tool to explore the Fourier-extension approximation used by FE-FBT: how a degree-*d* Fourier series, built on a period-2 Hermite extension of *f*, approximates *f* on a domain [L, U], and what that costs in terms of coefficient size and estimated CKKS noise.
 
+## A message from humans, to humans
+We did this tool to help us understand the capabilities of Fourier Extension Functional Bootstrapping, a recent technique that has been added to HE libraries such as OpenFHE and FIDESlib. This is meant to be exploratory and is vibe-coded, so take this with a grain of salt. 
+
+Let us know if you find any problem or have any suggestion. 
+
 ## Running it
 
 Open `main.html` in a modern browser. There is no build step and no server.
