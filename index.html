@@ -146,6 +146,7 @@ tr.best td { color: var(--c-s); font-weight: 600; }
         <option value="recip">1/x</option>
         <option value="sigmoid">sigmoid, 1/(1 + e⁻ˣ)</option>
         <option value="tanh">tanh x</option>
+        <option value="relu">ReLU, max(x, 0)</option>
         <option value="custom">Custom…</option>
       </select>
       <div class="exprbox" id="exprBox"><span>f(x) =</span><input type="text" id="expr" value="x * Phi(x)" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="f(x)" aria-describedby="exprMsg"></div>
@@ -962,6 +963,7 @@ const PRESETS = {
   recip: { label: '1/x', expr: '1/x', dom: 'pos' },
   sigmoid: { label: 'sigmoid', expr: 'sigmoid(x)', dom: 'sym' },
   tanh: { label: 'tanh', expr: 'tanh(x)', dom: 'sym' },
+  relu: { label: 'ReLU', expr: 'relu(x)', dom: 'sym' },
 };
 for (const p of Object.values(PRESETS)) p.js = parseExpr(p.expr).js;
 const state = { preset: 'gelu', src: PRESETS.gelu.expr, ast: null, js: PRESETS.gelu.js, dom: 'sym',

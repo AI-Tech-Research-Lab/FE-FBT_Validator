@@ -17,7 +17,7 @@ The page loads [decimal.js](https://github.com/MikeMcl/decimal.js) and [Plotly](
 
 | Control | Meaning |
 | --- | --- |
-| **Function** | A preset (GELU, sin, cos, exp, 1/√x, 1/x, sigmoid, tanh) or any expression in `x`; see [Custom functions](#custom-functions). |
+| **Function** | A preset (GELU, sin, cos, exp, 1/√x, 1/x, sigmoid, tanh, ReLU) or any expression in `x`; see [Custom functions](#custom-functions). |
 | **Domain** | *Symmetric* [−2ᵏ, 2ᵏ] or *Positive* [2⁻ᵏ, 2ᵏ], with k = 0…15. |
 | **Series degree** | d = 2⁴…2¹⁵. |
 | **Hermite order** | The extension order ke, chosen automatically or set by hand (1…40). |
