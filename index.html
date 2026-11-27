@@ -115,6 +115,28 @@ th, td { text-align: right; padding: 4px 14px 4px 0; border-bottom: 1px solid va
 th { font-weight: 500; color: var(--muted); }
 tr.best td { color: var(--c-s); font-weight: 600; }
 
+details.lv > summary { color: var(--ink); }
+.lvbody { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+.lvbody .sub { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.lvbody .sub > label, .lvbody .sub > span, .lvbody .head > label, .lvbody .head > span { font-size: 13.5px; }
+.lvbody .seg label { padding: 5px 10px; font-size: 13px; }
+.lvbody .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; }
+.lvbody .pair .head { font-size: 12.5px; color: var(--muted); }
+.lvbody .sep { border-top: 1px dashed var(--rule); padding-top: 10px; }
+
+.levels { display: flex; flex-direction: column; gap: 6px; }
+.levels h2 { font-size: 15px; font-weight: 600; margin: 4px 0 0; }
+.levels .tablewrap { margin-top: 0; }
+table.lvtable { width: 100%; min-width: 560px; border-top: 2px solid var(--ink); }
+table.lvtable th { font-size: 12.5px; vertical-align: bottom; padding-top: 6px; }
+table.lvtable td { font-family: var(--font-math); font-size: 18px; padding-top: 6px; padding-bottom: 6px; }
+table.lvtable th:first-child, table.lvtable td:first-child { text-align: left; font-family: var(--font-ui); font-size: 14px; }
+table.lvtable td.out { color: var(--c-s); font-weight: 500; }
+table.lvtable td.na { font-family: var(--font-ui); font-size: 13.5px; color: var(--na-ink); background: var(--na-bg); padding-left: 10px; text-align: left; }
+table.lvtable .yes { color: var(--c-s); font-family: var(--font-ui); font-size: 14px; font-weight: 600; }
+table.lvtable .no { color: var(--na-ink); font-family: var(--font-ui); font-size: 14px; font-weight: 600; }
+table.lvtable .why { display: block; font-family: var(--font-ui); font-size: 12px; font-weight: 400; color: var(--muted); }
+
 @media (max-width: 900px) {
   .app { grid-template-columns: 1fr; }
   .panel { border-right: 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px 24px; }
@@ -171,7 +193,8 @@ tr.best td { color: var(--c-s); font-weight: 600; }
 
     <div class="group">
       <div class="head"><label class="lbl" for="d">Series degree</label><output id="dOut" for="d"></output></div>
-      <input type="range" id="d" min="4" max="15" step="1" value="10">
+      <input type="range" id="d" min="0" max="15" step="1" value="8" aria-describedby="dHint">
+      <div class="hint" id="dHint"></div>
     </div>
 
     <div class="group">
@@ -179,6 +202,73 @@ tr.best td { color: var(--c-s); font-weight: 600; }
       <label class="check"><input type="checkbox" id="keAuto" checked> Choose ke automatically</label>
       <input type="range" id="ke" min="1" max="40" step="1" value="8" disabled aria-label="Manual ke">
     </div>
+
+    <details class="group lv" id="lvWrap">
+      <summary class="lbl">CKKS levels in OpenFHE</summary>
+      <div class="lvbody">
+        <div class="sub">
+          <div class="head"><label for="lvD">Chain depth D</label><output id="lvDOut" for="lvD"></output></div>
+          <input type="range" id="lvD" min="8" max="60" step="1" value="30">
+        </div>
+        <div class="sub">
+          <div class="head"><label for="lvS">Slots</label><output id="lvSOut" for="lvS"></output></div>
+          <input type="range" id="lvS" min="3" max="16" step="1" value="12">
+        </div>
+        <div class="sub">
+          <label for="lvST">Scaling technique</label>
+          <select id="lvST">
+            <option value="FLEXIBLEAUTO" selected>FLEXIBLEAUTO</option>
+            <option value="FLEXIBLEAUTOEXT">FLEXIBLEAUTOEXT</option>
+            <option value="FIXEDAUTO">FIXEDAUTO</option>
+            <option value="FIXEDMANUAL">FIXEDMANUAL</option>
+          </select>
+        </div>
+        <div class="sub">
+          <label for="lvSK">Secret key distribution</label>
+          <select id="lvSK">
+            <option value="SPARSE_ENCAPSULATED" selected>SPARSE_ENCAPSULATED</option>
+            <option value="SPARSE_TERNARY">SPARSE_TERNARY</option>
+            <option value="UNIFORM_TERNARY">UNIFORM_TERNARY</option>
+          </select>
+        </div>
+        <div class="sub" role="group" aria-labelledby="lvQ0L">
+          <span id="lvQ0L">First modulus q₀</span>
+          <div class="seg">
+            <input type="radio" name="lvq0" id="lvQ0s" checked><label for="lvQ0s">≤ 60 bits</label>
+            <input type="radio" name="lvq0" id="lvQ0b"><label for="lvQ0b">&gt; 60 bits</label>
+          </div>
+          <div class="hint" id="lvQ0Hint"></div>
+        </div>
+        <div class="sub sep" role="group" aria-labelledby="lvFeL">
+          <span id="lvFeL">FE-FBT level budget</span>
+          <div class="pair">
+            <div class="head"><label for="lvFeC">CoeffsToSlots</label><output id="lvFeCOut" for="lvFeC"></output></div>
+            <div class="head"><label for="lvFeS">SlotsToCoeffs</label><output id="lvFeSOut" for="lvFeS"></output></div>
+            <input type="range" id="lvFeC" min="1" max="5" step="1" value="3">
+            <input type="range" id="lvFeS" min="1" max="5" step="1" value="3">
+          </div>
+        </div>
+        <div class="sub" role="group" aria-labelledby="lvBsL">
+          <span id="lvBsL">Bootstrapping level budget</span>
+          <div class="pair">
+            <div class="head"><label for="lvBsC">CoeffsToSlots</label><output id="lvBsCOut" for="lvBsC"></output></div>
+            <div class="head"><label for="lvBsS">SlotsToCoeffs</label><output id="lvBsSOut" for="lvBsS"></output></div>
+            <input type="range" id="lvBsC" min="1" max="5" step="1" value="3">
+            <input type="range" id="lvBsS" min="1" max="5" step="1" value="3">
+          </div>
+          <div class="hint" id="lvCapHint" hidden></div>
+        </div>
+        <div class="sub sep">
+          <label class="check"><input type="checkbox" id="lvCur"> Check a ciphertext</label>
+          <div class="head"><label for="lvLvl">Its level</label><output id="lvLvlOut" for="lvLvl"></output></div>
+          <input type="range" id="lvLvl" min="0" max="30" step="1" value="20" disabled>
+          <div class="seg" role="radiogroup" aria-label="Its scale degree">
+            <input type="radio" name="lvsd" id="lvSd1" checked disabled><label for="lvSd1">Scale degree 1</label>
+            <input type="radio" name="lvsd" id="lvSd2" disabled><label for="lvSd2">2</label>
+          </div>
+        </div>
+      </div>
+    </details>
 
     <div class="group" role="group" aria-labelledby="lgX">
       <span class="lbl" id="lgX">x axis</span>
@@ -226,6 +316,23 @@ tr.best td { color: var(--c-s); font-weight: 600; }
       <div class="key"><dt>Expected total bits</dt><dd id="sTot">—</dd></div>
     </dl>
     <p class="note" id="sNote"></p>
+
+    <section class="levels" id="lvSection" hidden aria-labelledby="lvTitle">
+      <h2 id="lvTitle">CKKS levels in OpenFHE v1.6.1</h2>
+      <div class="tablewrap">
+        <table class="lvtable">
+          <thead><tr>
+            <th>Operation</th>
+            <th>Minimum effective<br>input levels</th>
+            <th>Last callable level,<br>scale degree 1 / 2</th>
+            <th>Effective levels<br>in output</th>
+            <th id="lvNowH" hidden>Callable<br>now</th>
+          </tr></thead>
+          <tbody id="lvBody"></tbody>
+        </table>
+      </div>
+      <p class="note" id="lvNote"></p>
+    </section>
 
     <details id="triedWrap" hidden>
       <summary id="triedSum">ke search</summary>
@@ -937,6 +1044,58 @@ function hermitePoly(tay, n) {
   return { ke: n, TA, TB, finite };
 }
 
+// ===================== CKKS level model (OpenFHE v1.6.1) =====================
+// Pure functions, checked against tools/levelprobe, which runs the real operations on OpenFHE.
+// "Effective levels" of a ciphertext = how many multiplications it still allows.
+
+// GetDepthByDegree (ckksrns-utils.cpp): depth of the Paterson–Stockmeyer evaluation of a degree-d series
+function psDepth(d) {
+  if (d < 5) return [0, 1, 2, 3, 3][d];
+  const UP = [5, 13, 27, 59, 119, 247, 495, 1007, 2031, 4031, 8127, 16255, 32639, 65279, 130815, 261631];
+  for (let i = 0; i < UP.length; i++) if (d <= UP[i]) return 4 + i;
+  return NaN;
+}
+
+// p = { D, logSlots, st, skd, q0big, fe: [CtS, StC], bs: [CtS, StC], cur: null | { level, sdeg } }
+//   D: multiplicative depth of the chain; st: scaling technique; skd: secret key distribution;
+//   q0big: first modulus above 60 bits (only matters for SPARSE_ENCAPSULATED); fe/bs: level budgets.
+// Returns the depths and one row per operation: FE-FBT with a degree-d series, bootstrapping with 1 and 2 iterations.
+function levelRows(p, d) {
+  const cap = (b) => Math.min(Math.max(b, 1), Math.max(p.logSlots, 1)); // as in the Setup functions
+  const fe = p.fe.map(cap), bs = p.bs.map(cap), D = p.D;
+  const ext = p.st === 'FLEXIBLEAUTOEXT' ? 1 : 0; // one extra tower: a ciphertext at level l has D + ext − l effective levels
+  const uniform = p.skd === 'UNIFORM_TERNARY';
+  // complex-exponential table of FE-FBT: Chebyshev series of degree deg (depth) followed by R double-angle squarings.
+  // SPARSE_ENCAPSULATED with q0 > 60 bits uses a sparse secret of Hamming weight 64, hence the table of SPARSE_TERNARY.
+  const largeSparse = p.skd === 'SPARSE_TERNARY' || (p.skd === 'SPARSE_ENCAPSULATED' && p.q0big);
+  const exp = uniform ? { deg: 27, depth: 6, R: 9 } : largeSparse ? { deg: 48, depth: 7, R: 3 } : { deg: 23, depth: 6, R: 4 };
+  // GetFEFBTDepth counts the series as psDepth(d) − 1 (the "normalized" Paterson–Stockmeyer depth). Below degree 5
+  // Paterson–Stockmeyer is not used and the series costs one level more than that: measured, not in GetFEFBTDepth.
+  const feDepth = fe[0] + fe[1] + exp.depth + exp.R + psDepth(d) - 1; // GetFEFBTDepth
+  const feCost = feDepth + (d < 5 ? 1 : 0);                           // levels actually consumed
+  const bsDepth = bs[0] + bs[1] + (uniform ? 14 : 10);                // GetBootstrapDepth
+  const row = (op, minIn, out) => {
+    const last1 = D + ext - minIn, r = { op, minIn, last1, last2: last1 - 1, out, feasible: out >= 1 };
+    if (!r.feasible) r.minD = D - out + 1;
+    if (p.cur) {
+      const effIn = D + ext - p.cur.level - (p.cur.sdeg - 1);
+      r.cur = { effIn, ok: r.feasible && effIn >= minIn };
+    }
+    return r;
+  };
+  return {
+    fe, bs, ext, exp, feDepth, bsDepth,
+    rows: [
+      // FE-FBT runs SlotsToCoeffs and the scale adjustment before ModRaise (StC + 1 levels, one more with the extra
+      // tower of FLEXIBLEAUTOEXT); everything else in GetFEFBTDepth comes after it, from the raised modulus.
+      row('fefbt', fe[1] + 1 + ext, D - (feCost - fe[1])),
+      // bootstrapping needs only the level of its correction before ModRaise; the 2nd iteration costs one more level
+      row('bs1', 1, D - bsDepth),
+      row('bs2', 1, D - bsDepth - 1),
+    ],
+  };
+}
+
 </script>
 <script>
 var twCache = {};
@@ -967,9 +1126,12 @@ const PRESETS = {
 };
 for (const p of Object.values(PRESETS)) p.js = parseExpr(p.expr).js;
 const state = { preset: 'gelu', src: PRESETS.gelu.expr, ast: null, js: PRESETS.gelu.js, dom: 'sym',
-  k: 3, e: 10, keAuto: true, keMan: 8, xlog: false, showExt: false, err: 'abs' };
+  k: 3, di: 8, keAuto: true, keMan: 8, xlog: false, showExt: false, err: 'abs' };
 state.ast = parseExpr(state.src).ast;
 const $ = (id) => document.getElementById(id);
+// Series degrees: the Paterson–Stockmeyer "sweet spots" (the largest degree at a given depth) and the powers of two
+const DEGREES = [5, 8, 13, 16, 27, 32, 59, 64, 119, 128, 247, 256, 495, 512, 1007, 1024];
+const degree = () => DEGREES[state.di];
 
 // ---------- formatting ----------
 const SUP = { '-': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
@@ -1069,10 +1231,10 @@ function cancelRunning() { curId++; if (workerBusy) killWorker(); }
 
 // ---------- main flow ----------
 let schedTimer = null, current = null;
-function keyOf() { return [state.js, state.dom, state.k, Math.pow(2, state.e), state.keAuto ? 'auto' : state.keMan].join('|'); }
+function keyOf() { return [state.js, state.dom, state.k, degree(), state.keAuto ? 'auto' : state.keMan].join('|'); }
 function schedule(delay = 140) { updateLabels(); clearTimeout(schedTimer); schedTimer = setTimeout(run, delay); }
 function run() {
-  const { ast, js, dom, k } = state, d = Math.pow(2, state.e);
+  const { ast, js, dom, k } = state, d = degree();
   const keKey = state.keAuto ? 'auto' : state.keMan;
   cancelRunning();
   if (dom === 'pos' && k === 0) return showNA('With a positive domain and k = 0, [2⁰, 2⁰] = [1, 1] is degenerate. Choose k ≥ 1.');
@@ -1136,13 +1298,15 @@ function showResult(res) {
 }
 
 function updateLabels() {
-  const { k } = state, d = Math.pow(2, state.e);
+  const { k } = state, d = degree();
   const [L, U] = domainOf(state.dom, k);
   $('kOut').textContent = 'k = ' + k;
   $('domHint').textContent = state.dom === 'pos'
     ? 'Domain [2⁻' + String(k).split('').map(c => SUP[c]).join('') + ', ' + pow2Label(k) + '] = [' + num(L) + ', ' + num(U) + ']'
     : 'Domain [−' + pow2Label(k) + ', ' + pow2Label(k) + '] = [' + num(L) + ', ' + num(U) + ']';
-  $('dOut').textContent = 'd = ' + pow2Label(state.e) + ' = ' + d;
+  $('dOut').textContent = 'd = ' + d;
+  const dd = psDepth(d), largest = DEGREES.includes(d) && psDepth(d + 1) > dd;
+  $('dHint').textContent = 'Paterson–Stockmeyer depth ' + dd + (largest ? ', the largest degree at this depth' : '');
   $('ke').disabled = state.keAuto;
   if (!state.keAuto) $('keOut').textContent = 'ke = ' + state.keMan;
   else if (!current || current.key !== keyOf()) $('keOut').textContent = 'ke: automatic';
@@ -1205,7 +1369,7 @@ function draw() {
     if (mode === 'rel') { const r = f !== undefined ? (f !== 0 ? e / Math.abs(f) : NaN) : e; return r > 0 && isFinite(r) ? r : null; }
     return e > 0 && isFinite(e) ? e : null;
   };
-  const xd = Array.from(D.x), dd = Math.pow(2, state.e);
+  const xd = Array.from(D.x), dd = degree();
   const traces = [
     { x: xd, y: Array.from(D.f), name: 'f(x)', mode: 'lines', line: { color: C.f, width: 2 }, legendgroup: 'f' },
     { x: xd, y: Array.from(D.s), name: 'series, d = ' + dd, mode: 'lines', line: { color: C.s, width: 2, dash: 'dash' }, legendgroup: 's' },
@@ -1248,6 +1412,71 @@ function draw() {
     uirevision: [state.js, state.dom, state.k, state.showExt, xlog, mode].join('|'),
   };
   Plotly.react($('plot'), traces, layout, { responsive: true, displaylogo: false, modeBarButtonsToRemove: ['select2d', 'lasso2d'] });
+}
+
+// ---------- CKKS level calculator ----------
+const lv = { D: 30, logS: 12, st: 'FLEXIBLEAUTO', skd: 'SPARSE_ENCAPSULATED', q0big: false, fe: [3, 3], bs: [3, 3],
+  cur: false, level: 20, sdeg: 1 };
+const LV_OPS = { fefbt: (d) => 'FE-FBT, degree ' + d, bs1: () => 'Bootstrapping, 1 iteration', bs2: () => 'Bootstrapping, 2 iterations' };
+function sup(n) { return String(n).split('').map(c => SUP[c] || c).join(''); }
+function renderLevels() {
+  const open = $('lvWrap').open;
+  $('lvSection').hidden = !open;
+  if (!open) return;
+  const d = degree(), ext = lv.st === 'FLEXIBLEAUTOEXT' ? 1 : 0;
+  // the ciphertext level goes from 0 (fresh) to D + ext (one tower left)
+  $('lvLvl').max = lv.D + ext;
+  if (lv.level > lv.D + ext) { lv.level = lv.D + ext; $('lvLvl').value = lv.level; }
+  const res = levelRows({ D: lv.D, logSlots: lv.logS, st: lv.st, skd: lv.skd, q0big: lv.q0big, fe: lv.fe, bs: lv.bs,
+    cur: lv.cur ? { level: lv.level, sdeg: lv.sdeg } : null }, d);
+
+  $('lvDOut').textContent = 'D = ' + lv.D;
+  $('lvSOut').textContent = '2' + sup(lv.logS) + ' = ' + Math.pow(2, lv.logS);
+  const se = lv.skd === 'SPARSE_ENCAPSULATED';
+  $('lvQ0s').disabled = $('lvQ0b').disabled = !se;
+  $('lvQ0Hint').textContent = !se ? 'Only matters for SPARSE_ENCAPSULATED.'
+    : lv.q0big ? 'Hamming weight 64: FE-FBT uses the table of SPARSE_TERNARY (7 + 3 levels instead of 6 + 4, same total). ' +
+      'OpenFHE accepts q₀ > 60 bits only with composite scaling or the 128-bit build, neither modeled here.'
+    : 'Sparse secret of Hamming weight 32.';
+  $('lvFeCOut').textContent = res.fe[0]; $('lvFeSOut').textContent = res.fe[1];
+  $('lvBsCOut').textContent = res.bs[0]; $('lvBsSOut').textContent = res.bs[1];
+  const capped = [...lv.fe, ...lv.bs].some(b => b > lv.logS);
+  $('lvCapHint').hidden = !capped;
+  $('lvCapHint').textContent = 'Budgets above log₂(slots) = ' + lv.logS + ' are capped to ' + lv.logS + ', as OpenFHE does.';
+  ['lvLvl', 'lvSd1', 'lvSd2'].forEach(id => { $(id).disabled = !lv.cur; });
+  $('lvLvlOut').textContent = lv.cur ? 'level ' + lv.level + ', ' + (lv.D + ext - lv.level - (lv.sdeg - 1)) + ' effective' : '—';
+
+  $('lvTitle').textContent = 'CKKS levels in OpenFHE v1.6.1, Fourier degree d = ' + d;
+  $('lvNowH').hidden = !lv.cur;
+  const cols = lv.cur ? 4 : 3;
+  $('lvBody').innerHTML = res.rows.map(r => {
+    let h = '<tr><td>' + LV_OPS[r.op](d) + '</td>';
+    if (!r.feasible) {
+      h += '<td class="na" colspan="' + cols + '">Not feasible with this chain (the output would have ' + num(r.out) +
+        ' effective levels): it needs D ≥ ' + r.minD + '.</td>';
+      return h + '</tr>';
+    }
+    h += '<td>' + r.minIn + '</td><td>' + r.last1 + ' / ' + (r.last2 >= 0 ? r.last2 : '—') + '</td><td class="out">' + r.out + '</td>';
+    if (lv.cur) {
+      const c = r.cur;
+      h += '<td>' + (c.ok ? '<span class="yes">yes</span>' : '<span class="no">no</span><span class="why">' +
+        (c.effIn < 0 ? 'no levels left' : 'has ' + c.effIn + ', needs ' + r.minIn) + '</span>') + '</td>';
+    }
+    return h + '</tr>';
+  }).join('');
+
+  const [f, b] = [res.rows[0], res.rows[1]];
+  let note = 'GetFEFBTDepth = ' + res.feDepth + ' (budget {' + res.fe.join(', ') + '}, exponential table of degree ' + res.exp.deg +
+    ' and ' + res.exp.R + ' squarings, series depth ' + (psDepth(d) - 1) + '), GetBootstrapDepth = ' + res.bsDepth +
+    ' (budget {' + res.bs.join(', ') + '}). ';
+  if (f.feasible && b.feasible) {
+    note += f.out >= b.out ? 'FE-FBT leaves as many levels as bootstrapping or more, and also evaluates the function. '
+      : 'FE-FBT leaves ' + (b.out - f.out) + ' level' + (b.out - f.out > 1 ? 's' : '') + ' fewer than bootstrapping, but also evaluates the function. ';
+  }
+  note += 'Effective levels are the multiplications a ciphertext still allows' +
+    (ext ? '; with FLEXIBLEAUTOEXT a ciphertext at level l has D + 1 − l of them (one extra tower)' : '') +
+    '. Scale degree 2 (not yet rescaled) needs one more level. FE-FBT requires FirstModSize = ScalingModSize + 1.';
+  $('lvNote').textContent = note;
 }
 
 // ---------- theme ----------
@@ -1303,7 +1532,7 @@ function init() {
   $('dSym').addEventListener('change', () => { setDom('sym'); schedule(0); });
   $('dPos').addEventListener('change', () => { setDom('pos'); schedule(0); });
   $('k').addEventListener('input', e => { state.k = +e.target.value; schedule(); });
-  $('d').addEventListener('input', e => { state.e = +e.target.value; schedule(); });
+  $('d').addEventListener('input', e => { state.di = +e.target.value; schedule(); renderLevels(); });
   $('keAuto').addEventListener('change', e => { state.keAuto = e.target.checked; if (!state.keAuto) state.keMan = +$('ke').value; schedule(0); });
   $('ke').addEventListener('input', e => { state.keMan = +e.target.value; schedule(); });
   $('xlog').addEventListener('change', e => { state.xlog = e.target.checked; draw(); });
@@ -1315,9 +1544,26 @@ function init() {
     try { localStorage.setItem('fefbt-theme', theme); } catch (e) { }
     applyTheme();
   });
+  const lvIn = (id, fn) => $(id).addEventListener('input', e => { fn(e.target); renderLevels(); });
+  lvIn('lvD', t => { lv.D = +t.value; });
+  lvIn('lvS', t => { lv.logS = +t.value; });
+  lvIn('lvST', t => { lv.st = t.value; });
+  lvIn('lvSK', t => { lv.skd = t.value; });
+  lvIn('lvQ0s', t => { lv.q0big = !t.checked; });
+  lvIn('lvQ0b', t => { lv.q0big = t.checked; });
+  lvIn('lvFeC', t => { lv.fe[0] = +t.value; });
+  lvIn('lvFeS', t => { lv.fe[1] = +t.value; });
+  lvIn('lvBsC', t => { lv.bs[0] = +t.value; });
+  lvIn('lvBsS', t => { lv.bs[1] = +t.value; });
+  lvIn('lvCur', t => { lv.cur = t.checked; });
+  lvIn('lvLvl', t => { lv.level = +t.value; });
+  lvIn('lvSd1', t => { if (t.checked) lv.sdeg = 1; });
+  lvIn('lvSd2', t => { if (t.checked) lv.sdeg = 2; });
+  $('lvWrap').addEventListener('toggle', renderLevels);
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (current) draw(); });
   applyTheme();
   updateLabels();
+  renderLevels();
   run();
 }
 document.addEventListener('DOMContentLoaded', init);

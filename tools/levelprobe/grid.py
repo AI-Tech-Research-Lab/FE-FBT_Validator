@@ -30,39 +30,50 @@ def run(cfg):
 
 GRIDS = {
     # mode, st, skd, D, logN, logSlots, cts, stc, fdeg, sms, fms
-    "smoke": [("bs1", "FLEXIBLEAUTO", "SPARSE_ENCAPSULATED", 24, 12, 11, 2, 2, 0, 50, 51)],
+    "smoke": [("bs1", "FLEXIBLEAUTO", "SPARSE_ENCAPSULATED", 24, 10, 5, 2, 2, 0, 50, 51)],
 }
+
+# Small rings keep every run around 100 MB and under a few seconds: N = 2^10, with 2^5 (sparse) or 2^9 (full)
+# slots. Budget {1,1} (dense linear transforms) is only used with 2^5 slots.
+LOGN = 10
+STS = ["FLEXIBLEAUTO", "FLEXIBLEAUTOEXT", "FIXEDAUTO", "FIXEDMANUAL"]
+SKDS = ["SPARSE_ENCAPSULATED", "SPARSE_TERNARY", "UNIFORM_TERNARY"]
+BUDGETS = [(1, 1, 5), (3, 2, 9)]  # cts, stc, logSlots
 
 def grid_main():
     g = []
-    STs = ["FLEXIBLEAUTO", "FLEXIBLEAUTOEXT", "FIXEDAUTO", "FIXEDMANUAL"]
-    # FE-FBT: scaling techniques x secret distributions x budgets x degrees
-    for st in STs:
-        for skd, fms in [("SPARSE_ENCAPSULATED", 51), ("SPARSE_TERNARY", 51), ("UNIFORM_TERNARY", 51)]:
-            for cts, stc in [(1, 1), (3, 2)]:
-                g.append(("fefbt", st, skd, 30, 12, 11, cts, stc, 27, 50, fms))
-    for fdeg in [1, 2, 3, 4, 5, 6, 13, 14, 59, 119, 247]:
-        g.append(("fefbt", "FLEXIBLEAUTO", "SPARSE_ENCAPSULATED", 30, 12, 11, 2, 2, fdeg, 50, 51))
-    g.append(("fefbt", "FLEXIBLEAUTO", "SPARSE_ENCAPSULATED", 30, 12, 11, 2, 2, 27, 59, 60))
-    g.append(("fefbt", "FLEXIBLEAUTO", "SPARSE_ENCAPSULATED", 30, 12, 11, 2, 2, 27, 60, 61))
-    g.append(("fefbt", "FLEXIBLEAUTO", "SPARSE_ENCAPSULATED", 30, 12, 8, 2, 3, 27, 50, 51))   # sparse slots
-    g.append(("fefbt", "FLEXIBLEAUTO", "SPARSE_ENCAPSULATED", 30, 12, 11, 4, 4, 27, 50, 51))
+    # FE-FBT (q0 = Delta + 1): scaling techniques x secret distributions x budgets
+    for st in STS:
+        for skd in SKDS:
+            for cts, stc, logS in BUDGETS:
+                g.append(("fefbt", st, skd, 30, LOGN, logS, cts, stc, 27, 50, 51))
+    # degree transitions of GetDepthByDegree, and the degrees offered by the page
+    for fdeg in [1, 2, 3, 4, 5, 6, 8, 13, 14, 16, 27, 28, 32, 59, 60, 64, 119, 120, 128, 247, 248, 256, 495, 496, 512,
+                 1007, 1008, 1024]:
+        g.append(("fefbt", "FLEXIBLEAUTO", "SPARSE_ENCAPSULATED", 30, LOGN, 5, 2, 2, fdeg, 50, 51))
+    # SPARSE_ENCAPSULATED with q0 > 60 bits (Hamming weight 64, K = 28 table), and q0 = 60
+    g.append(("fefbt", "FLEXIBLEAUTO", "SPARSE_ENCAPSULATED", 30, LOGN, 5, 2, 2, 27, 59, 60))
+    g.append(("fefbt", "FLEXIBLEAUTO", "SPARSE_ENCAPSULATED", 30, LOGN, 5, 2, 2, 27, 60, 61))
+    # sparse vs full slots, larger budgets
+    g.append(("fefbt", "FLEXIBLEAUTO", "SPARSE_ENCAPSULATED", 30, LOGN, 9, 2, 2, 27, 50, 51))
+    g.append(("fefbt", "FLEXIBLEAUTO", "SPARSE_ENCAPSULATED", 30, LOGN, 9, 4, 4, 27, 50, 51))
+    g.append(("fefbt", "FIXEDMANUAL", "SPARSE_ENCAPSULATED", 30, LOGN, 9, 4, 4, 27, 50, 51))
     # normal bootstrapping, 1 and 2 iterations
     for mode in ["bs1", "bs2"]:
-        for st in STs:
-            for skd, fms in [("SPARSE_ENCAPSULATED", 60), ("SPARSE_TERNARY", 60), ("UNIFORM_TERNARY", 60)]:
-                for cts, stc in [(1, 1), (3, 2)]:
-                    g.append((mode, st, skd, 30, 12, 11, cts, stc, 0, 50, fms))
-        g.append((mode, "FLEXIBLEAUTO", "SPARSE_ENCAPSULATED", 30, 12, 8, 2, 3, 0, 50, 60))
-        g.append((mode, "FLEXIBLEAUTO", "SPARSE_ENCAPSULATED", 30, 12, 11, 2, 2, 0, 50, 51))
-        g.append((mode, "FLEXIBLEAUTO", "SPARSE_ENCAPSULATED", 30, 12, 11, 2, 2, 0, 59, 61))
+        for st in STS:
+            for skd in SKDS:
+                for cts, stc, logS in BUDGETS:
+                    g.append((mode, st, skd, 30, LOGN, logS, cts, stc, 0, 50, 60))
+        g.append((mode, "FLEXIBLEAUTO", "SPARSE_ENCAPSULATED", 30, LOGN, 9, 2, 2, 0, 50, 60))
+        g.append((mode, "FLEXIBLEAUTO", "SPARSE_ENCAPSULATED", 30, LOGN, 5, 2, 2, 0, 50, 51))
+        g.append((mode, "FLEXIBLEAUTO", "SPARSE_ENCAPSULATED", 30, LOGN, 5, 2, 2, 0, 59, 61))
     return g
 
 GRIDS["main"] = grid_main()
 
 if __name__ == "__main__":
     name = sys.argv[1] if len(sys.argv) > 1 else "smoke"
-    jobs = int(sys.argv[2]) if len(sys.argv) > 2 else 4
+    jobs = int(sys.argv[2]) if len(sys.argv) > 2 else 1  # one probe at a time (memory)
     results = []
     with ThreadPoolExecutor(jobs) as ex:
         for r in ex.map(run, GRIDS[name]):

@@ -1,0 +1,3296 @@
+[
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   1,
+   1,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 17 GetBootstrapDepth 12",
+  "s1": {
+   "last": 28,
+   "minEff": 2,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 27,
+   "minEff": 2,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   9,
+   3,
+   2,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 20 GetBootstrapDepth 15",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 12,
+   "outLevel": 17,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 12,
+   "outLevel": 17,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 17 GetBootstrapDepth 12",
+  "s1": {
+   "last": 28,
+   "minEff": 2,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 27,
+   "minEff": 2,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 20 GetBootstrapDepth 15",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 12,
+   "outLevel": 17,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 12,
+   "outLevel": 17,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 22 GetBootstrapDepth 16",
+  "s1": {
+   "last": 28,
+   "minEff": 2,
+   "effOut": 9,
+   "outLevel": 20,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 27,
+   "minEff": 2,
+   "effOut": 9,
+   "outLevel": 20,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 25 GetBootstrapDepth 19",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 7,
+   "outLevel": 22,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 7,
+   "outLevel": 22,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTOEXT",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   1,
+   1,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 32 depth 30 GetFEFBTDepth 17 GetBootstrapDepth 12",
+  "s1": {
+   "last": 28,
+   "minEff": 3,
+   "effOut": 14,
+   "outLevel": 16,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 14,
+   "outLevel": 16,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTOEXT",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   9,
+   3,
+   2,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 32 depth 30 GetFEFBTDepth 20 GetBootstrapDepth 15",
+  "s1": {
+   "last": 27,
+   "minEff": 4,
+   "effOut": 12,
+   "outLevel": 18,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 4,
+   "effOut": 12,
+   "outLevel": 18,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTOEXT",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 32 depth 30 GetFEFBTDepth 17 GetBootstrapDepth 12",
+  "s1": {
+   "last": 28,
+   "minEff": 3,
+   "effOut": 14,
+   "outLevel": 16,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 14,
+   "outLevel": 16,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTOEXT",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 32 depth 30 GetFEFBTDepth 20 GetBootstrapDepth 15",
+  "s1": {
+   "last": 27,
+   "minEff": 4,
+   "effOut": 12,
+   "outLevel": 18,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 4,
+   "effOut": 12,
+   "outLevel": 18,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTOEXT",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 32 depth 30 GetFEFBTDepth 22 GetBootstrapDepth 16",
+  "s1": {
+   "last": 28,
+   "minEff": 3,
+   "effOut": 9,
+   "outLevel": 21,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 9,
+   "outLevel": 21,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTOEXT",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 32 depth 30 GetFEFBTDepth 25 GetBootstrapDepth 19",
+  "s1": {
+   "last": 27,
+   "minEff": 4,
+   "effOut": 7,
+   "outLevel": 23,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 4,
+   "effOut": 7,
+   "outLevel": 23,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FIXEDAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   1,
+   1,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 17 GetBootstrapDepth 12",
+  "s1": {
+   "last": 28,
+   "minEff": 2,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 27,
+   "minEff": 2,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FIXEDAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   9,
+   3,
+   2,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 20 GetBootstrapDepth 15",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 12,
+   "outLevel": 17,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 12,
+   "outLevel": 17,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FIXEDAUTO",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 17 GetBootstrapDepth 12",
+  "s1": {
+   "last": 28,
+   "minEff": 2,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 27,
+   "minEff": 2,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FIXEDAUTO",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 20 GetBootstrapDepth 15",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 12,
+   "outLevel": 17,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 12,
+   "outLevel": 17,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FIXEDAUTO",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 22 GetBootstrapDepth 16",
+  "s1": {
+   "last": 28,
+   "minEff": 2,
+   "effOut": 9,
+   "outLevel": 20,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 27,
+   "minEff": 2,
+   "effOut": 9,
+   "outLevel": 20,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FIXEDAUTO",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 25 GetBootstrapDepth 19",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 7,
+   "outLevel": 22,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 7,
+   "outLevel": 22,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FIXEDMANUAL",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   1,
+   1,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 17 GetBootstrapDepth 12",
+  "s1": {
+   "last": 28,
+   "minEff": 2,
+   "effOut": 14,
+   "outLevel": 16,
+   "outDeg": 1
+  },
+  "s2": {
+   "last": 27,
+   "minEff": 2,
+   "effOut": 14,
+   "outLevel": 16,
+   "outDeg": 1
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FIXEDMANUAL",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   9,
+   3,
+   2,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 20 GetBootstrapDepth 15",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 12,
+   "outLevel": 18,
+   "outDeg": 1
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 12,
+   "outLevel": 18,
+   "outDeg": 1
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FIXEDMANUAL",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 17 GetBootstrapDepth 12",
+  "s1": {
+   "last": 28,
+   "minEff": 2,
+   "effOut": 14,
+   "outLevel": 16,
+   "outDeg": 1
+  },
+  "s2": {
+   "last": 27,
+   "minEff": 2,
+   "effOut": 14,
+   "outLevel": 16,
+   "outDeg": 1
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FIXEDMANUAL",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 20 GetBootstrapDepth 15",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 12,
+   "outLevel": 18,
+   "outDeg": 1
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 12,
+   "outLevel": 18,
+   "outDeg": 1
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FIXEDMANUAL",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 22 GetBootstrapDepth 16",
+  "s1": {
+   "last": 28,
+   "minEff": 2,
+   "effOut": 9,
+   "outLevel": 21,
+   "outDeg": 1
+  },
+  "s2": {
+   "last": 27,
+   "minEff": 2,
+   "effOut": 9,
+   "outLevel": 21,
+   "outDeg": 1
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FIXEDMANUAL",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 25 GetBootstrapDepth 19",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 7,
+   "outLevel": 23,
+   "outDeg": 1
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 7,
+   "outLevel": 23,
+   "outDeg": 1
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   1,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 14 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 17,
+   "outLevel": 12,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 17,
+   "outLevel": 12,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   2,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 15 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 16,
+   "outLevel": 13,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 16,
+   "outLevel": 13,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   3,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 16 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   4,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 16 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   5,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 17 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   6,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 18 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   8,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 18 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   13,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 18 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   14,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 19 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 13,
+   "outLevel": 16,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 13,
+   "outLevel": 16,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   16,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 19 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 13,
+   "outLevel": 16,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 13,
+   "outLevel": 16,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 19 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 13,
+   "outLevel": 16,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 13,
+   "outLevel": 16,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   28,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 20 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 12,
+   "outLevel": 17,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 12,
+   "outLevel": 17,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   32,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 20 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 12,
+   "outLevel": 17,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 12,
+   "outLevel": 17,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   59,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 20 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 12,
+   "outLevel": 17,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 12,
+   "outLevel": 17,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   60,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 21 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 11,
+   "outLevel": 18,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 11,
+   "outLevel": 18,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   64,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 21 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 11,
+   "outLevel": 18,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 11,
+   "outLevel": 18,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   119,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 21 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 11,
+   "outLevel": 18,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 11,
+   "outLevel": 18,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   120,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 22 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 10,
+   "outLevel": 19,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 10,
+   "outLevel": 19,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   128,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 22 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 10,
+   "outLevel": 19,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 10,
+   "outLevel": 19,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   247,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 22 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 10,
+   "outLevel": 19,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 10,
+   "outLevel": 19,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   248,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 23 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 9,
+   "outLevel": 20,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 9,
+   "outLevel": 20,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   256,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 23 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 9,
+   "outLevel": 20,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 9,
+   "outLevel": 20,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   495,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 23 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 9,
+   "outLevel": 20,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 9,
+   "outLevel": 20,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   496,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 24 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 8,
+   "outLevel": 21,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 8,
+   "outLevel": 21,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   512,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 24 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 8,
+   "outLevel": 21,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 8,
+   "outLevel": 21,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   1007,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 24 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 8,
+   "outLevel": 21,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 8,
+   "outLevel": 21,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   1008,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 25 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 7,
+   "outLevel": 22,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 7,
+   "outLevel": 22,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   1024,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 25 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 7,
+   "outLevel": 22,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 7,
+   "outLevel": 22,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   27,
+   59,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 19 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 13,
+   "outLevel": 16,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 13,
+   "outLevel": 16,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   27,
+   60,
+   61
+  ],
+  "info": "ERROR context openfhe/src/pke/lib/scheme/gen-cryptocontext-params-validation.cpp:l.86:validateParametersForCryptocontext(): scalingModSize should be at least 14 and less than 60",
+  "s1": null,
+  "s2": null
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   9,
+   2,
+   2,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 19 GetBootstrapDepth 14",
+  "s1": {
+   "last": 27,
+   "minEff": 3,
+   "effOut": 13,
+   "outLevel": 16,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 26,
+   "minEff": 3,
+   "effOut": 13,
+   "outLevel": 16,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   9,
+   4,
+   4,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 23 GetBootstrapDepth 18",
+  "s1": {
+   "last": 25,
+   "minEff": 5,
+   "effOut": 11,
+   "outLevel": 18,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 24,
+   "minEff": 5,
+   "effOut": 11,
+   "outLevel": 18,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "fefbt",
+   "FIXEDMANUAL",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   9,
+   4,
+   4,
+   27,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetFEFBTDepth 23 GetBootstrapDepth 18",
+  "s1": {
+   "last": 25,
+   "minEff": 5,
+   "effOut": 11,
+   "outLevel": 19,
+   "outDeg": 1
+  },
+  "s2": {
+   "last": 24,
+   "minEff": 5,
+   "effOut": 11,
+   "outLevel": 19,
+   "outDeg": 1
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 12",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 18,
+   "outLevel": 11,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 18,
+   "outLevel": 11,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 15",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FLEXIBLEAUTO",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 12",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 18,
+   "outLevel": 11,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 18,
+   "outLevel": 11,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FLEXIBLEAUTO",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 15",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FLEXIBLEAUTO",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 16",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FLEXIBLEAUTO",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 19",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 11,
+   "outLevel": 18,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 11,
+   "outLevel": 18,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FLEXIBLEAUTOEXT",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 32 depth 30 GetBootstrapDepth 12",
+  "s1": {
+   "last": 30,
+   "minEff": 1,
+   "effOut": 18,
+   "outLevel": 12,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 18,
+   "outLevel": 12,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FLEXIBLEAUTOEXT",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 32 depth 30 GetBootstrapDepth 15",
+  "s1": {
+   "last": 30,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 15,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 15,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FLEXIBLEAUTOEXT",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 32 depth 30 GetBootstrapDepth 12",
+  "s1": {
+   "last": 30,
+   "minEff": 1,
+   "effOut": 18,
+   "outLevel": 12,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 18,
+   "outLevel": 12,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FLEXIBLEAUTOEXT",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 32 depth 30 GetBootstrapDepth 15",
+  "s1": {
+   "last": 30,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 15,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 15,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FLEXIBLEAUTOEXT",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 32 depth 30 GetBootstrapDepth 16",
+  "s1": {
+   "last": 30,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 16,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 16,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FLEXIBLEAUTOEXT",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 32 depth 30 GetBootstrapDepth 19",
+  "s1": {
+   "last": 30,
+   "minEff": 1,
+   "effOut": 11,
+   "outLevel": 19,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 11,
+   "outLevel": 19,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FIXEDAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 12",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 18,
+   "outLevel": 11,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 18,
+   "outLevel": 11,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FIXEDAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 15",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FIXEDAUTO",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 12",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 18,
+   "outLevel": 11,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 18,
+   "outLevel": 11,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FIXEDAUTO",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 15",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FIXEDAUTO",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 16",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FIXEDAUTO",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 19",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 11,
+   "outLevel": 18,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 11,
+   "outLevel": 18,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FIXEDMANUAL",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 12",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 18,
+   "outLevel": 11,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 18,
+   "outLevel": 11,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FIXEDMANUAL",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 15",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FIXEDMANUAL",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 12",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 18,
+   "outLevel": 11,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 18,
+   "outLevel": 11,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FIXEDMANUAL",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 15",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FIXEDMANUAL",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 16",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FIXEDMANUAL",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 19",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 11,
+   "outLevel": 18,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 11,
+   "outLevel": 18,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   9,
+   2,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 14",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 16,
+   "outLevel": 13,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 16,
+   "outLevel": 13,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   0,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 14",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 16,
+   "outLevel": 13,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 16,
+   "outLevel": 13,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs1",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   0,
+   59,
+   61
+  ],
+  "info": "ERROR context openfhe/src/core/include/math/nbtheory-impl.h:l.360:LastPrime(): Requested bit length 61 exceeds maximum allowed length 60",
+  "s1": null,
+  "s2": null
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 12",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 17,
+   "outLevel": 12,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 17,
+   "outLevel": 12,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 15",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FLEXIBLEAUTO",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 12",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 17,
+   "outLevel": 12,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 17,
+   "outLevel": 12,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FLEXIBLEAUTO",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 15",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FLEXIBLEAUTO",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 16",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 13,
+   "outLevel": 16,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 13,
+   "outLevel": 16,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FLEXIBLEAUTO",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 19",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 10,
+   "outLevel": 19,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 10,
+   "outLevel": 19,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FLEXIBLEAUTOEXT",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 32 depth 30 GetBootstrapDepth 12",
+  "s1": {
+   "last": 30,
+   "minEff": 1,
+   "effOut": 17,
+   "outLevel": 13,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 17,
+   "outLevel": 13,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FLEXIBLEAUTOEXT",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 32 depth 30 GetBootstrapDepth 15",
+  "s1": {
+   "last": 30,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 16,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 16,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FLEXIBLEAUTOEXT",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 32 depth 30 GetBootstrapDepth 12",
+  "s1": {
+   "last": 30,
+   "minEff": 1,
+   "effOut": 17,
+   "outLevel": 13,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 17,
+   "outLevel": 13,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FLEXIBLEAUTOEXT",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 32 depth 30 GetBootstrapDepth 15",
+  "s1": {
+   "last": 30,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 16,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 16,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FLEXIBLEAUTOEXT",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 32 depth 30 GetBootstrapDepth 16",
+  "s1": {
+   "last": 30,
+   "minEff": 1,
+   "effOut": 13,
+   "outLevel": 17,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 13,
+   "outLevel": 17,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FLEXIBLEAUTOEXT",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 32 depth 30 GetBootstrapDepth 19",
+  "s1": {
+   "last": 30,
+   "minEff": 1,
+   "effOut": 10,
+   "outLevel": 20,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 10,
+   "outLevel": 20,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FIXEDAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 12",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 17,
+   "outLevel": 12,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 17,
+   "outLevel": 12,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FIXEDAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 15",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FIXEDAUTO",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 12",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 17,
+   "outLevel": 12,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 17,
+   "outLevel": 12,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FIXEDAUTO",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 15",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FIXEDAUTO",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 16",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 13,
+   "outLevel": 16,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 13,
+   "outLevel": 16,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FIXEDAUTO",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 19",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 10,
+   "outLevel": 19,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 10,
+   "outLevel": 19,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FIXEDMANUAL",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 12",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 17,
+   "outLevel": 12,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 17,
+   "outLevel": 12,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FIXEDMANUAL",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 15",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FIXEDMANUAL",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 12",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 17,
+   "outLevel": 12,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 17,
+   "outLevel": 12,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FIXEDMANUAL",
+   "SPARSE_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 15",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 14,
+   "outLevel": 15,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FIXEDMANUAL",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   5,
+   1,
+   1,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 16",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 13,
+   "outLevel": 16,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 13,
+   "outLevel": 16,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FIXEDMANUAL",
+   "UNIFORM_TERNARY",
+   30,
+   10,
+   9,
+   3,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 19",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 10,
+   "outLevel": 19,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 10,
+   "outLevel": 19,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   9,
+   2,
+   2,
+   0,
+   50,
+   60
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 14",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   0,
+   50,
+   51
+  ],
+  "info": "INFO towers 31 depth 30 GetBootstrapDepth 14",
+  "s1": {
+   "last": 29,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  },
+  "s2": {
+   "last": 28,
+   "minEff": 1,
+   "effOut": 15,
+   "outLevel": 14,
+   "outDeg": 2
+  }
+ },
+ {
+  "cfg": [
+   "bs2",
+   "FLEXIBLEAUTO",
+   "SPARSE_ENCAPSULATED",
+   30,
+   10,
+   5,
+   2,
+   2,
+   0,
+   59,
+   61
+  ],
+  "info": "ERROR context openfhe/src/core/include/math/nbtheory-impl.h:l.360:LastPrime(): Requested bit length 61 exceeds maximum allowed length 60",
+  "s1": null,
+  "s2": null
+ }
+]

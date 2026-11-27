@@ -9,7 +9,7 @@ Let us know if you find any problem or have any suggestion.
 
 ## Running it
 
-Open `main.html` in a modern browser. There is no build step and no server.
+Open `index.html` in a modern browser. There is no build step and no server.
 
 The page loads [decimal.js](https://github.com/MikeMcl/decimal.js) and [Plotly](https://plotly.com/javascript/) from cdnjs, and its fonts from Google Fonts, so it needs an internet connection the first time.
 
@@ -19,11 +19,12 @@ The page loads [decimal.js](https://github.com/MikeMcl/decimal.js) and [Plotly](
 | --- | --- |
 | **Function** | A preset (GELU, sin, cos, exp, 1/√x, 1/x, sigmoid, tanh, ReLU) or any expression in `x`; see [Custom functions](#custom-functions). |
 | **Domain** | *Symmetric* [−2ᵏ, 2ᵏ] or *Positive* [2⁻ᵏ, 2ᵏ], with k = 0…15. |
-| **Series degree** | d = 2⁴…2¹⁵. |
+| **Series degree** | d ∈ {5, 8, 13, 16, 27, 32, 59, 64, 119, 128, 247, 256, 495, 512, 1007, 1024}, default 119: the Paterson–Stockmeyer "sweet spots" (the largest degree at a given depth) and the powers of two. |
 | **Hermite order** | The extension order ke, chosen automatically or set by hand (1…40). |
 | **x axis** | Linear, or logarithmic (positive domains only). |
 | **Show the extension** | Also plots the extension p(s) and the series on [U, U + W]. |
 | **Error panel** | Absolute error, relative error, or bits of precision. |
+| **CKKS levels in OpenFHE** | A collapsible group with the [level calculator](#ckks-level-calculator). |
 
 The statistics below the plot report the chosen ke, the max, mean and min error on [L, U], the bits of precision −log₂(err max / max|f|), the coefficient norm l1 = 2·Σ|cⱼ|, the estimated CKKS noise 8.5·10⁻¹⁰·l1, and the expected total bits −log₂((err max + noise) / max|f|). When ke is automatic, the "ke search" table lists every value that was tried.
 
@@ -52,6 +53,45 @@ The page also refuses a result with l1 > 2²⁰⁰ (the series would not fit in 
 
 The heavy computation runs in a Web Worker, with a fallback to the main thread if blob workers are blocked. Results and Hermite polynomials are cached, so going back to a previous setting is instant.
 
+## CKKS level calculator
+
+Opening **CKKS levels in OpenFHE** in the sidebar shows, below the statistics, when and where FE-FBT can be used in OpenFHE v1.6.1 compared with normal bootstrapping. The Fourier degree is the page's series degree. There is one row per operation: FE-FBT with that degree, and bootstrapping with 1 and 2 iterations.
+
+| Column | Meaning |
+| --- | --- |
+| **Minimum effective input levels** | The levels the input must still have: what the operation spends before ModRaise. |
+| **Last callable level, scale degree 1 / 2** | The deepest level at which the operation can be called. A ciphertext with scale degree 2 (not yet rescaled) needs one more level. |
+| **Effective levels in output** | The levels left after the operation. |
+| **Callable now** | Shown when *Check a ciphertext* is on: whether a ciphertext at the given level and scale degree can be passed in. |
+
+"Effective levels" are the multiplications a ciphertext still allows. With a chain of depth D a ciphertext at level l has D − l of them, or D + 1 − l with FLEXIBLEAUTOEXT (one extra tower). If an operation would leave no effective level, its row says it is not feasible with this chain and gives the minimum D.
+
+Inputs: the chain depth D, the number of slots (it caps the level budgets at log₂ slots, as OpenFHE does), the scaling technique (FLEXIBLEAUTO, FLEXIBLEAUTOEXT, FIXEDAUTO or FIXEDMANUAL; composite scaling is not modeled), the secret key distribution, the size of the first modulus q₀, and the level budgets {CoeffsToSlots, SlotsToCoeffs} of FE-FBT and of bootstrapping.
+
+The model, with b = {CtS, StC} and ext = 1 for FLEXIBLEAUTOEXT (0 otherwise):
+
+- `GetFEFBTDepth = CtS + StC + exp + R + (PS(d) − 1)`, where PS(d) is OpenFHE's `GetDepthByDegree` and exp + R is the complex-exponential table plus its double-angle squarings: 6 + 9 = 15 for UNIFORM_TERNARY, 6 + 4 = 10 for SPARSE_ENCAPSULATED (Hamming weight 32), 7 + 3 = 10 for SPARSE_TERNARY and for SPARSE_ENCAPSULATED with q₀ > 60 bits (Hamming weight 64).
+- `GetBootstrapDepth = CtS + StC + 10` for sparse secrets, `+ 14` for UNIFORM_TERNARY.
+- FE-FBT: minimum effective input StC + 1 + ext, last level D − StC − 1, output D − (GetFEFBTDepth − StC). Below degree 5 Paterson–Stockmeyer is not used and the output has one level less than GetFEFBTDepth predicts. The page's degrees start at 5.
+- Bootstrapping: minimum effective input 1, last level D − 1 + ext, output D − GetBootstrapDepth for 1 iteration and one level less for 2.
+- FE-FBT also requires FirstModSize = ScalingModSize + 1. On the 64-bit build ScalingModSize < 60, so q₀ > 60 bits is only possible with composite scaling or the 128-bit build. Neither is modeled here, and the 128-bit build does not support FE-FBT. Since both sparse tables cost 10 levels, the q₀ choice does not change the numbers.
+
+### Checking the model against OpenFHE
+
+`tools/levelprobe` runs the real operations on OpenFHE v1.6.1. For each input level and scale degree it calls FE-FBT or bootstrapping, checks the decrypted result, and counts the effective levels of the input and the output by multiplying by 1 until decryption fails.
+
+```
+git clone --depth 1 --branch v1.6.1 https://github.com/openfheorg/openfhe-development.git openfhe
+cd openfhe && mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_UNITTESTS=OFF -DBUILD_BENCHMARKS=OFF -DBUILD_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX=$PWD/../install
+make -j && make install && cd ../..
+cmake -S tools/levelprobe -B tools/levelprobe/build && cmake --build tools/levelprobe/build
+python3 tools/levelprobe/grid.py main     # one probe at a time, N = 2^10; writes build/grid-main.json
+node tools/levelprobe/check.js tools/levelprobe/build/grid-main.json
+```
+
+The grid covers every scaling technique and secret distribution, budgets {1, 1} and {3, 2} (also {2, 2} and {4, 4}), 2⁵ and 2⁹ slots, the degree transitions of `GetDepthByDegree` from 1 to 1024, and 1 and 2 bootstrapping iterations. `tools/levelprobe/results/` holds the committed run, and `node tools/levelprobe/check.js` compares the page's `levelRows` with it. All 108 configurations that OpenFHE accepts match. OpenFHE refuses the other 3, which have q₀ = 61 bits.
+
 ## Custom functions
 
 Type any expression in `x` in the function box. Enter applies it, and typing also applies it after a short pause. If an expression matches a preset, the preset is selected.
@@ -73,4 +113,5 @@ Requirements and error messages:
 
 ## Files
 
-- `main.html`: the whole application (HTML, CSS and JavaScript).
+- `index.html`: the whole application (HTML, CSS and JavaScript).
+- `tools/levelprobe/`: the OpenFHE harness that checks the level calculator (`levelprobe.cpp`, `grid.py`, `check.js`, and the measured `results/`).
